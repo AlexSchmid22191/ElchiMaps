@@ -25,14 +25,15 @@ class ElchPlotMenu(QWidget):
         self.normalize_buttons['Linear'].setChecked(True)
 
         self.line_checks = {key: QRadioButton(parent=self, text=key, objectName=key)
-                            for key in ['Omega', '2 Theta', 'Radial', 'q parallel', 'q normal']}
+                            for key in ['Omega', '2 Theta', 'Radial', 'Q Parallel', 'Q Normal']}
         self.line_check_group = QButtonGroup()
         self.line_check_group.setExclusive(True)
+        self.line_checks['Omega'].setChecked(True)
 
         self.para_box_label = QLabel(text='Omega')
         self.norm_box_label = QLabel(text='2 Theta')
-        self.line_box_para = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°')
-        self.line_box_norm = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°')
+        self.line_box_para = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°', value=1)
+        self.line_box_norm = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°', value=1)
 
         self.color_select = QComboBox()
         self.color_select.addItems(plt.colormaps())
@@ -81,6 +82,11 @@ class ElchPlotMenu(QWidget):
         self.setLayout(vbox)
 
         self.coordinate_check_group.buttonClicked.connect(self.change_coordinates)
+        self.line_box_para.valueChanged.connect(self.request_line_scan)
+        self.line_box_norm.valueChanged.connect(self.request_line_scan)
+        self.line_check_group.buttonClicked.connect(self.request_line_scan)
+
+        self.coordinate_checks['Angles'].setChecked(True)
         signals_gui.load_file.connect(lambda: self.coordinate_checks['Angles'].setChecked(True))
 
     def change_coordinates(self, button):
@@ -98,3 +104,8 @@ class ElchPlotMenu(QWidget):
                 self.para_box_label.setText('q parallel')
                 self.norm_box_label.setText('q normal')
                 signals_gui.get_q_map.emit()
+
+    def request_line_scan(self):
+        signals_gui.get_line_scan.emit(self.line_box_para.value(), self.line_box_norm.value(),
+                                       self.line_check_group.checkedButton().objectName(),
+                                       self.coordinate_check_group.checkedButton().objectName())
