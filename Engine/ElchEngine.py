@@ -17,6 +17,8 @@ class ElchEngine:
         self.q_counts = None
 
         signals_gui.load_file.connect(self.load_file)
+        signals_gui.get_angle_map.connect(lambda: signals_engine.map_data_angle.emit(self.get_angle_data()))
+        signals_gui.get_q_map.connect(lambda: signals_engine.map_data_q.emit(self.get_q_data()))
 
     def load_file(self, path):
         raw_file = xu.io.XRDMLFile(path)

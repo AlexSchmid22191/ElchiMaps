@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, \
     QHBoxLayout
-
+from Signals.Signals import signals_gui
 
 class ElchPlotMenu(QWidget):
     def __init__(self, *args, **kwargs):
@@ -59,6 +59,7 @@ class ElchPlotMenu(QWidget):
         self.setLayout(vbox)
 
         self.coordinate_check_group.buttonClicked.connect(self.change_coordinates)
+        signals_gui.load_file.connect(lambda: self.coordinate_checks['Angles'].setChecked(True))
 
     def change_coordinates(self, button):
         match button.objectName():
@@ -67,10 +68,11 @@ class ElchPlotMenu(QWidget):
                     box.setSuffix('°')
                 self.para_box_label.setText('Omega')
                 self.norm_box_label.setText('2 Theta')
-                # Send a signal to the plot wondows to change units and map
+                signals_gui.get_angle_map.emit()
+
             case 'Reciprocal Vectors':
                 for box in [self.line_box_para, self.line_box_norm]:
                     box.setSuffix(u' Å⁻¹')
                 self.para_box_label.setText('q parallel')
                 self.norm_box_label.setText('q normal')
-                # Send a signal to the plot wondows to change units and map
+                signals_gui.get_q_map.emit()
