@@ -19,7 +19,10 @@ class ElchPlotMenu(QWidget):
         self.line_check_group = QButtonGroup()
         self.line_check_group.setExclusive(True)
 
-        self.line_position_box = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°')
+        self.para_box_label = QLabel(text='Omega')
+        self.norm_box_label = QLabel(text='2 Theta')
+        self.line_box_para = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°')
+        self.line_box_norm = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°')
 
         vbox = QVBoxLayout()
         vbox.addWidget(QLabel(text='Coordinate System', objectName='Header'))
@@ -35,8 +38,12 @@ class ElchPlotMenu(QWidget):
         vbox.addSpacing(10)
 
         hbox = QHBoxLayout()
-        hbox.addWidget(QLabel(text='Line scan position:'))
-        hbox.addWidget(self.line_position_box)
+        hbox.addWidget(self.para_box_label)
+        hbox.addWidget(self.line_box_para)
+        vbox.addLayout(hbox)
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.norm_box_label)
+        hbox.addWidget(self.line_box_norm)
         vbox.addLayout(hbox)
 
         vbox.addSpacing(20)
@@ -55,8 +62,14 @@ class ElchPlotMenu(QWidget):
     def change_coordinates(self, button):
         match button.objectName():
             case 'Angles':
-                self.line_position_box.setSuffix('°')
+                for box in [self.line_box_para, self.line_box_norm]:
+                    box.setSuffix('°')
+                self.para_box_label.setText('Omega')
+                self.norm_box_label.setText('2 Theta')
                 # Send a signal to the plot wondows to change units and map
             case 'Reciprocal Vectors':
-                self.line_position_box.setSuffix(u' Å⁻¹')
+                for box in [self.line_box_para, self.line_box_norm]:
+                    box.setSuffix(u' Å⁻¹')
+                self.para_box_label.setText('q parallel')
+                self.norm_box_label.setText('q normal')
                 # Send a signal to the plot wondows to change units and map
