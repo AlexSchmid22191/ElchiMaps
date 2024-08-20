@@ -15,7 +15,7 @@ class ElchPlotMenu(QWidget):
         self.coordinate_checks['Angles'].setChecked(True)
 
         self.line_checks = {key: QRadioButton(parent=self, text=key, objectName=key)
-                            for key in ['Omega', '2 Theta', 'q parallel', 'q normal']}
+                            for key in ['Omega', '2 Theta', 'Radial', 'q parallel', 'q normal']}
         self.line_check_group = QButtonGroup()
         self.line_check_group.setExclusive(True)
 
