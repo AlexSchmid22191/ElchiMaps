@@ -29,4 +29,21 @@ class ElchPlot(FigureCanvasQTAgg):
         ax.xaxis.set_major_formatter(matplotlib.ticker.ScalarFormatter())
         ax.yaxis.set_major_formatter(matplotlib.ticker.ScalarFormatter())
 
+        ax.xaxis.get_major_formatter().set_useOffset(False)
+        ax.yaxis.get_major_formatter().set_useOffset(False)
+
         self.figure.tight_layout()
+
+        ax.callbacks.connect('ylim_changed', self.tighten)
+        ax.callbacks.connect('xlim_changed', self.tighten)
+
+    def toggle_zoom(self, state):
+        self.toolbar.zoom(state)
+
+    def autoscale(self):
+        self.ax.autoscale()
+        self.tighten()
+
+    def tighten(self, *args):
+        self.figure.tight_layout()
+        self.figure.canvas.draw()

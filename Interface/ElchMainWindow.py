@@ -67,5 +67,11 @@ class ElchMainWindow(QWidget):
         self.ribbon.buttongroup.buttonToggled.connect(self.controlmenu.adjust_visibility)
         self.ribbon.menu_buttons['File'].setChecked(True)
 
+        self.controlmenu.menus['Plotting'].buttons['Zoom'].toggled.connect(self.contourframe.toggle_zoom)
+        self.controlmenu.menus['Plotting'].buttons['Autoscale'].clicked.connect(self.contourframe.autoscale)
+
+        self.controlmenu.menus['Plotting'].buttons['Zoom'].toggled.connect(self.lineframe.toggle_zoom)
+        self.controlmenu.menus['Plotting'].buttons['Autoscale'].clicked.connect(self.lineframe.autoscale)
+
         self.setLayout(hbox_outer)
         self.show()
