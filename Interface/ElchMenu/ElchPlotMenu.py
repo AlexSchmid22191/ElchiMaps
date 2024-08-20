@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, 
     QHBoxLayout
 from Signals.Signals import signals_gui
 
+
 class ElchPlotMenu(QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -14,6 +15,12 @@ class ElchPlotMenu(QWidget):
         self.coordinate_check_group = QButtonGroup()
         self.coordinate_check_group.setExclusive(True)
         self.coordinate_checks['Angles'].setChecked(True)
+
+        self.normalize_buttons = {key: QRadioButton(parent=self, text=key, objectName=key)
+                                  for key in ['Linear', 'Logarithmic', 'Square Root']}
+        self.normalize_group = QButtonGroup()
+        self.normalize_group.setExclusive(True)
+        self.normalize_buttons['Linear'].setChecked(True)
 
         self.line_checks = {key: QRadioButton(parent=self, text=key, objectName=key)
                             for key in ['Omega', '2 Theta', 'Radial', 'q parallel', 'q normal']}
@@ -29,6 +36,12 @@ class ElchPlotMenu(QWidget):
         vbox.addWidget(QLabel(text='Coordinate System', objectName='Header'))
         for key, button in self.coordinate_checks.items():
             self.coordinate_check_group.addButton(button)
+            vbox.addWidget(button)
+        vbox.addSpacing(20)
+
+        vbox.addWidget(QLabel(text='Normalization', objectName='Header'))
+        for key, button in self.normalize_buttons.items():
+            self.normalize_group.addButton(button)
             vbox.addWidget(button)
         vbox.addSpacing(20)
 

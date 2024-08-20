@@ -73,5 +73,7 @@ class ElchMainWindow(QWidget):
         self.controlmenu.menus['Plotting'].buttons['Zoom'].toggled.connect(self.lineframe.toggle_zoom)
         self.controlmenu.menus['Plotting'].buttons['Autoscale'].clicked.connect(self.lineframe.autoscale)
 
+        self.controlmenu.menus['Plotting'].normalize_group.buttonClicked.connect(self.contourframe.set_norm)
+
         self.setLayout(hbox_outer)
         self.show()
