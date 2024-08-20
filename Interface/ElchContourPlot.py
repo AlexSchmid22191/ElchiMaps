@@ -16,6 +16,4 @@ class ElchContourPlot(ElchPlot):
         self.ax.set_xlabel(r'$\omega\ (\degree)$')
         self.ax.set_ylabel(r'$2\Theta\ (\degree)$')
 
-        self.ax.autoscale()
-        self.figure.tight_layout()
-        self.figure.canvas.draw()
+        self.autoscale()
