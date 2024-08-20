@@ -1,5 +1,7 @@
+import matplotlib.pyplot as plt
 from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, \
-    QHBoxLayout
+    QHBoxLayout, QComboBox
+
 from Signals.Signals import signals_gui
 
 
@@ -32,6 +34,9 @@ class ElchPlotMenu(QWidget):
         self.line_box_para = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°')
         self.line_box_norm = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°')
 
+        self.color_select = QComboBox()
+        self.color_select.addItems(plt.colormaps())
+
         vbox = QVBoxLayout()
         vbox.addWidget(QLabel(text='Coordinate System', objectName='Header'))
         for key, button in self.coordinate_checks.items():
@@ -43,6 +48,10 @@ class ElchPlotMenu(QWidget):
         for key, button in self.normalize_buttons.items():
             self.normalize_group.addButton(button)
             vbox.addWidget(button)
+        vbox.addSpacing(20)
+
+        vbox.addWidget(QLabel(text='Colormap', objectName='Header'))
+        vbox.addWidget(self.color_select)
         vbox.addSpacing(20)
 
         vbox.addWidget(QLabel(text='Line Scans', objectName='Header'))
