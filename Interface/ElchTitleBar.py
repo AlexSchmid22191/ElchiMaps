@@ -57,8 +57,8 @@ class ElchTitlebar(QWidget):
         vbox.addWidget(QLabel('License: CC-BY-SA 4.0'), alignment=Qt.AlignHCenter)
 
         icon = QLabel()
-        icon.setPixmap(QPixmap('Interface/Icons/cc-by-sa.png').scaled(150, 141*150/403))
-        icon.setFixedSize(150, 141*150/403)
+        icon.setPixmap(QPixmap('Interface/Icons/cc-by-sa.png').scaled(150, 141 * 150 / 403))
+        icon.setFixedSize(150, 141 * 150 / 403)
         vbox.addWidget(icon, alignment=Qt.AlignHCenter)
 
         vbox.addWidget(QLabel('Maintainer: Alex Schmid'), alignment=Qt.AlignHCenter)

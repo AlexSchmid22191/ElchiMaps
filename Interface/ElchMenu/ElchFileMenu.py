@@ -1,4 +1,8 @@
-from PySide6.QtWidgets import QWidget, QLabel, QCheckBox, QVBoxLayout, QPushButton
+import os
+
+from PySide6.QtWidgets import QWidget, QLabel, QCheckBox, QVBoxLayout, QPushButton, QFileDialog
+
+from Signals.Signals import signals_gui
 
 
 class ElchFileMenu(QWidget):
@@ -29,3 +33,14 @@ class ElchFileMenu(QWidget):
 
         vbox.addStretch()
         self.setLayout(vbox)
+
+        self.buttons['Open File'].clicked.connect(self.open_file)
+
+        self.file_open_path = os.path.expanduser('~')
+
+    def open_file(self):
+        filepath, *_ = QFileDialog.getOpenFileName(self, 'Select XRDML file', self.file_open_path,
+                                                   'XRDML files (*.xrdml)')
+        self.file_open_path = os.path.dirname(filepath)
+        if filepath.endswith('.xrdml'):
+            signals_gui.load_file.emit(filepath)

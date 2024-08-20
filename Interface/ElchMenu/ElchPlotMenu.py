@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, QHBoxLayout, QAbstractButton
+from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, \
+    QHBoxLayout
 
 
 class ElchPlotMenu(QWidget):

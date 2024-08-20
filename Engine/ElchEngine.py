@@ -1,5 +1,7 @@
-import xrayutilities as xu
 import numpy as np
+import xrayutilities as xu
+
+from Signals.Signals import signals_engine, signals_gui
 
 
 class ElchEngine:
@@ -14,6 +16,8 @@ class ElchEngine:
         self.q_para = None
         self.q_counts = None
 
+        signals_gui.load_file.connect(self.load_file)
+
     def load_file(self, path):
         raw_file = xu.io.XRDMLFile(path)
         self.tt = raw_file.scan.ddict['2Theta']
@@ -23,12 +27,14 @@ class ElchEngine:
 
         self.ang_to_q()
 
+        signals_engine.map_data_angle.emit(self.get_angle_data())
+
     def ang_to_q(self):
         k = 1.5405980
         om = self.om * np.pi / 180
         tt = self.tt * np.pi / 180
-        q_norm = 1/k * (np.sin(tt-om) + np.sin(om))
-        q_para = 1/k * (np.cos(tt-om) - np.cos(om))
+        q_norm = 1 / k * (np.sin(tt - om) + np.sin(om))
+        q_para = 1 / k * (np.cos(tt - om) - np.cos(om))
 
         res = np.min(tt.shape)
         gd = xu.Gridder2D(res, res)
@@ -39,8 +45,7 @@ class ElchEngine:
         self.q_counts = gd.data
 
     def get_angle_data(self):
-        return self.om, self.tt, self.counts
+        return {'om': self.om, 'tt': self.tt, 'counts': self.counts}
 
     def get_q_data(self):
-        return self.q_para, self.q_norm, self.q_counts
-
+        return {'q_para': self.q_para, 'q_norm': self.q_norm, 'q_counts': self.q_counts}

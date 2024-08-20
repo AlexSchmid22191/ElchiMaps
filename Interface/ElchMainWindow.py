@@ -2,11 +2,11 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QFontDatabase
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QSizeGrip
 
-from Interface.ElchMenu.ElchMenu import ElchMenu
 from Interface.ElchContourPlot import ElchContourPlot
+from Interface.ElchLinePlot import ElchLinePlot
+from Interface.ElchMenu.ElchMenu import ElchMenu
 from Interface.ElchRibbon import ElchRibbon
 from Interface.ElchTitleBar import ElchTitlebar
-from Interface.ElchLinePlot import ElchLinePlot
 
 
 class ElchMainWindow(QWidget):
