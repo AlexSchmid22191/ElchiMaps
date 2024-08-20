@@ -33,6 +33,7 @@ class ElchPlot(FigureCanvasQTAgg):
         ax.yaxis.get_major_formatter().set_useOffset(False)
 
         self.figure.tight_layout()
+        self.figure.canvas.mpl_connect('button_release_event', self.tighten_on_zoom)
 
     def toggle_zoom(self, state):
         self.toolbar.zoom(state)
@@ -41,3 +42,8 @@ class ElchPlot(FigureCanvasQTAgg):
         self.ax.autoscale()
         self.figure.tight_layout()
         self.figure.canvas.draw()
+
+    def tighten_on_zoom(self, *args):
+        if self.toolbar.mode == 'zoom rect':
+            self.figure.tight_layout()
+            self.figure.canvas.draw()
