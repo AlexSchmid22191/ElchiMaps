@@ -5,7 +5,7 @@ class GuiSignals(QObject):
     load_file = Signal(str)
     get_angle_map = Signal()
     get_q_map = Signal()
-    get_line_scan = Signal(float, float, str, str)
+    get_line_scan = Signal(float, float, float, str, str, str)
     ang_to_q = Signal(float, float)
     q_to_ang = Signal(float, float)
 

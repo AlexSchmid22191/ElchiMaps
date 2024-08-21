@@ -40,7 +40,7 @@ class ElchEngine:
         signals_engine.map_data_angle.emit(self.get_angle_data())
 
     def ang_map_to_q_map(self):
-        q_para,q_norm = self._atq(self.om, self.tt)
+        q_para, q_norm = self._atq(self.om, self.tt)
         self.res = np.min(self.tt.shape)
         gd = xu.Gridder2D(self.res, self.res)
         gd(q_para, q_norm, self.counts)
@@ -74,7 +74,7 @@ class ElchEngine:
         om, tt = self._qta(qy, qz)
         signals_engine.q_to_ang.emit(om, tt)
 
-    def get_line_scan(self, pos_1, pos_2, scan_type, coord_type):
+    def get_line_scan(self, pos_1, pos_2, int_dist, scan_type, coord_type, int_dir):
         if self.raw_file is None:
             return
         match coord_type:
@@ -84,24 +84,34 @@ class ElchEngine:
             case 'Angles':
                 qy, qz = self._atq(pos_1, pos_2)
 
+        match int_dir:
+            case 'Omega':
+                int_dir = 'omega'
+            case '2 Theta':
+                int_dir = '2theta'
+            case 'Radial':
+                int_dir = 'radial'
+            case 'Q Parallel' | 'Q Normal':
+                int_dir = 'q'
+
         match scan_type:
             case 'Q Parallel':
                 x, y, _ = xu.analysis.line_cuts.get_qy_scan([self.q_para, self.q_norm], self.q_counts, qz, self.res,
-                                                            0.1)
+                                                            int_dist, intdir=int_dir)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_parallel'})
             case 'Q Normal':
                 x, y, _ = xu.analysis.line_cuts.get_qz_scan([self.q_para, self.q_norm], self.q_counts, qy, self.res,
-                                                            0.1)
+                                                            int_dist, intdir=int_dir)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_normal'})
             case 'Omega':
                 x, y, _ = xu.analysis.line_cuts.get_omega_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                               self.res, 0.1)
+                                                               self.res, int_dist, intdir=int_dir)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'omega'})
             case '2 Theta':
                 x, y, _ = xu.analysis.line_cuts.get_ttheta_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                                self.res, 0.1)
+                                                                self.res, int_dist, intdir=int_dir)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': '2theta'})
             case 'Radial':
                 x, y, _ = xu.analysis.line_cuts.get_radial_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                                self.res, 0.1)
+                                                                self.res, int_dist, intdir=int_dir)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'radial'})
