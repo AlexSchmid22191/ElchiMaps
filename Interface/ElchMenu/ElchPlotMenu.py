@@ -33,8 +33,8 @@ class ElchPlotMenu(QWidget):
 
         self.para_box_label = QLabel(text='Omega')
         self.norm_box_label = QLabel(text='2 Theta')
-        self.line_box_para = QDoubleSpinBox(decimals=4, singleStep=1e-2, minimum=0, maximum=180, suffix=u'°', value=45)
-        self.line_box_norm = QDoubleSpinBox(decimals=4, singleStep=1e-2, minimum=0, maximum=180, suffix=u'°', value=90)
+        self.line_box_para = QDoubleSpinBox(decimals=4, singleStep=1e-3, minimum=0, maximum=180, suffix=u'°', value=30)
+        self.line_box_norm = QDoubleSpinBox(decimals=4, singleStep=1e-3, minimum=0, maximum=180, suffix=u'°', value=60)
 
         self.color_select = QComboBox()
         self.color_select.addItems(plt.colormaps())

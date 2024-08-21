@@ -87,21 +87,21 @@ class ElchEngine:
         match scan_type:
             case 'Q Parallel':
                 x, y, _ = xu.analysis.line_cuts.get_qy_scan([self.q_para, self.q_norm], self.q_counts, qz, self.res,
-                                                            0.01)
+                                                            0.1)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_parallel'})
             case 'Q Normal':
                 x, y, _ = xu.analysis.line_cuts.get_qz_scan([self.q_para, self.q_norm], self.q_counts, qy, self.res,
-                                                            0.01)
+                                                            0.1)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_normal'})
             case 'Omega':
                 x, y, _ = xu.analysis.line_cuts.get_omega_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                               self.res, 0.01)
+                                                               self.res, 0.1)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'omega'})
             case '2 Theta':
                 x, y, _ = xu.analysis.line_cuts.get_ttheta_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                                self.res, 0.01)
+                                                                self.res, 0.1)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': '2theta'})
             case 'Radial':
                 x, y, _ = xu.analysis.line_cuts.get_radial_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                                self.res, 0.01)
+                                                                self.res, 0.1)
                 signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'radial'})
