@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, \
     QHBoxLayout, QComboBox
 
-from Signals.Signals import signals_gui
+from Signals.Signals import signals_gui, signals_engine
 
 
 class ElchPlotMenu(QWidget):
@@ -89,6 +89,8 @@ class ElchPlotMenu(QWidget):
 
         self.coordinate_checks['Angles'].setChecked(True)
         signals_gui.load_file.connect(lambda: self.coordinate_checks['Angles'].setChecked(True))
+        signals_engine.q_to_ang.connect(self._update_line_cut_boxes)
+        signals_engine.ang_to_q.connect(self._update_line_cut_boxes)
 
     def change_coordinates(self, button):
         match button.objectName():
@@ -97,16 +99,7 @@ class ElchPlotMenu(QWidget):
                     box.setSuffix('°')
                 self.para_box_label.setText('Omega')
                 self.norm_box_label.setText('2 Theta')
-
-                qy = self.line_box_para.value()
-                qz = self.line_box_norm.value()
-                k = 1.5405980
-                q = np.sqrt(qy**2 + qz**2)
-                tt = 2 * np.arcsin(q*k/2) * 180 / np.pi
-                om = np.arccos(qy*k) * 180 / np.pi - 90 + tt/2
-
-                self.line_box_para.setValue(om)
-                self.line_box_norm.setValue(tt)
+                signals_gui.q_to_ang.emit(self.line_box_para.value(), self.line_box_norm.value())
                 signals_gui.get_angle_map.emit()
 
             case 'Reciprocal Vectors':
@@ -114,15 +107,16 @@ class ElchPlotMenu(QWidget):
                     box.setSuffix(u' Å⁻¹')
                 self.para_box_label.setText('q parallel')
                 self.norm_box_label.setText('q normal')
-
-                om = self.line_box_para.value()
-                tt = self.line_box_norm.value()
-                k = 1.5405980
-                qy = 1 / k * (np.cos(tt / 180 * np.pi - om / 180 * np.pi) - np.cos(om / 180 * np.pi))
-                qz = 1 / k * (np.sin(tt / 180 * np.pi - om / 180 * np.pi) + np.sin(om / 180 * np.pi))
-                self.line_box_para.setValue(qy)
-                self.line_box_norm.setValue(qz)
+                signals_gui.ang_to_q.emit(self.line_box_para.value(), self.line_box_norm.value())
                 signals_gui.get_q_map.emit()
+
+    def _update_line_cut_boxes(self, pos_para, pos_norm):
+        for box in [self.line_box_para, self.line_box_norm]:
+            box.blockSignals(True)
+        self.line_box_para.setValue(pos_para)
+        self.line_box_norm.setValue(pos_norm)
+        for box in [self.line_box_para, self.line_box_norm]:
+            box.blockSignals(False)
 
     def request_line_scan(self):
         signals_gui.get_line_scan.emit(self.line_box_para.value(), self.line_box_norm.value(),

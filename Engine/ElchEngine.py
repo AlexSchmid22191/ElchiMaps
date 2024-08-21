@@ -18,10 +18,15 @@ class ElchEngine:
         self.q_para = None
         self.q_counts = None
 
+        self.wl = 1.5405980
+        self.k = 2 * np.pi / self.wl
+
         signals_gui.load_file.connect(self.load_file)
         signals_gui.get_angle_map.connect(lambda: signals_engine.map_data_angle.emit(self.get_angle_data()))
         signals_gui.get_q_map.connect(lambda: signals_engine.map_data_q.emit(self.get_q_data()))
         signals_gui.get_line_scan.connect(self.get_line_scan)
+        signals_gui.q_to_ang.connect(self.q_to_ang)
+        signals_gui.ang_to_q.connect(self.ang_to_q)
 
     def load_file(self, path):
         self.raw_file = xu.io.XRDMLFile(path)
@@ -30,18 +35,13 @@ class ElchEngine:
         self.om = np.broadcast_to(self.om.reshape(-1, 1), self.tt.shape)
         self.counts = self.raw_file.scan.ddict['counts']
 
-        self.ang_to_q()
+        self.ang_map_to_q_map()
 
         signals_engine.map_data_angle.emit(self.get_angle_data())
 
-    def ang_to_q(self):
-        k = 1.5405980
-        om = self.om * np.pi / 180
-        tt = self.tt * np.pi / 180
-        q_norm = 1 / k * (np.sin(tt - om) + np.sin(om))
-        q_para = 1 / k * (np.cos(tt - om) - np.cos(om))
-
-        self.res = np.min(tt.shape)
+    def ang_map_to_q_map(self):
+        q_para,q_norm = self._atq(self.om, self.tt)
+        self.res = np.min(self.tt.shape)
         gd = xu.Gridder2D(self.res, self.res)
         gd(q_para, q_norm, self.counts)
 
@@ -55,6 +55,25 @@ class ElchEngine:
     def get_q_data(self):
         return {'q_para': self.q_para, 'q_norm': self.q_norm, 'q_counts': self.q_counts}
 
+    def _atq(self, om, tt):
+        qy = self.k * (np.cos(tt / 180 * np.pi - om / 180 * np.pi) - np.cos(om / 180 * np.pi))
+        qz = self.k * (np.sin(tt / 180 * np.pi - om / 180 * np.pi) + np.sin(om / 180 * np.pi))
+        return qy, qz
+
+    def _qta(self, qy, qz):
+        q = np.sqrt(qy ** 2 + qz ** 2)
+        tt = 2 * np.arcsin(q / self.k / 2) * 180 / np.pi
+        om = np.arccos(qy / self.k) * 180 / np.pi - 90 + tt / 2
+        return om, tt
+
+    def ang_to_q(self, om, tt):
+        qy, qz = self._atq(om, tt)
+        signals_engine.ang_to_q.emit(qy, qz)
+
+    def q_to_ang(self, qy, qz):
+        om, tt = self._qta(qy, qz)
+        signals_engine.q_to_ang.emit(om, tt)
+
     def get_line_scan(self, pos_1, pos_2, scan_type, coord_type):
         if self.raw_file is None:
             return
@@ -63,9 +82,7 @@ class ElchEngine:
                 qy = pos_1
                 qz = pos_2
             case 'Angles':
-                k = 1.5405980
-                qy = 1 / k * (np.cos(pos_2 / 180 * np.pi - pos_1 / 180 * np.pi) - np.cos(pos_1 / 180 * np.pi))
-                qz = 1 / k * (np.sin(pos_2 / 180 * np.pi - pos_1 / 180 * np.pi) + np.sin(pos_1 / 180 * np.pi))
+                qy, qz = self._atq(pos_1, pos_2)
 
         match scan_type:
             case 'Q Parallel':
