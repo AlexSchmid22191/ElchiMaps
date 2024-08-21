@@ -24,11 +24,11 @@ class ElchEngine:
         signals_gui.get_line_scan.connect(self.get_line_scan)
 
     def load_file(self, path):
-        raw_file = xu.io.XRDMLFile(path)
-        self.tt = raw_file.scan.ddict['2Theta']
-        self.om = raw_file.scan.ddict['Omega']
+        self.raw_file = xu.io.XRDMLFile(path)
+        self.tt = self.raw_file.scan.ddict['2Theta']
+        self.om = self.raw_file.scan.ddict['Omega']
         self.om = np.broadcast_to(self.om.reshape(-1, 1), self.tt.shape)
-        self.counts = raw_file.scan.ddict['counts']
+        self.counts = self.raw_file.scan.ddict['counts']
 
         self.ang_to_q()
 
@@ -56,6 +56,8 @@ class ElchEngine:
         return {'q_para': self.q_para, 'q_norm': self.q_norm, 'q_counts': self.q_counts}
 
     def get_line_scan(self, pos_1, pos_2, scan_type, coord_type):
+        if self.raw_file is None:
+            return
         match coord_type:
             case 'Reciprocal Vectors':
                 qy = pos_1

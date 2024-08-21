@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib.pyplot as plt
 from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, \
     QHBoxLayout, QComboBox
@@ -32,8 +33,8 @@ class ElchPlotMenu(QWidget):
 
         self.para_box_label = QLabel(text='Omega')
         self.norm_box_label = QLabel(text='2 Theta')
-        self.line_box_para = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°', value=1)
-        self.line_box_norm = QDoubleSpinBox(decimals=2, singleStep=1e-2, minimum=0, maximum=90, suffix=u'°', value=1)
+        self.line_box_para = QDoubleSpinBox(decimals=4, singleStep=1e-2, minimum=0, maximum=180, suffix=u'°', value=45)
+        self.line_box_norm = QDoubleSpinBox(decimals=4, singleStep=1e-2, minimum=0, maximum=180, suffix=u'°', value=90)
 
         self.color_select = QComboBox()
         self.color_select.addItems(plt.colormaps())
@@ -96,6 +97,16 @@ class ElchPlotMenu(QWidget):
                     box.setSuffix('°')
                 self.para_box_label.setText('Omega')
                 self.norm_box_label.setText('2 Theta')
+
+                qy = self.line_box_para.value()
+                qz = self.line_box_norm.value()
+                k = 1.5405980
+                q = np.sqrt(qy**2 + qz**2)
+                tt = 2 * np.arcsin(q*k/2) * 180 / np.pi
+                om = np.arccos(qy*k) * 180 / np.pi - 90 + tt/2
+
+                self.line_box_para.setValue(om)
+                self.line_box_norm.setValue(tt)
                 signals_gui.get_angle_map.emit()
 
             case 'Reciprocal Vectors':
@@ -103,9 +114,20 @@ class ElchPlotMenu(QWidget):
                     box.setSuffix(u' Å⁻¹')
                 self.para_box_label.setText('q parallel')
                 self.norm_box_label.setText('q normal')
+
+                om = self.line_box_para.value()
+                tt = self.line_box_norm.value()
+                k = 1.5405980
+                qy = 1 / k * (np.cos(tt / 180 * np.pi - om / 180 * np.pi) - np.cos(om / 180 * np.pi))
+                qz = 1 / k * (np.sin(tt / 180 * np.pi - om / 180 * np.pi) + np.sin(om / 180 * np.pi))
+                self.line_box_para.setValue(qy)
+                self.line_box_norm.setValue(qz)
                 signals_gui.get_q_map.emit()
 
     def request_line_scan(self):
         signals_gui.get_line_scan.emit(self.line_box_para.value(), self.line_box_norm.value(),
                                        self.line_check_group.checkedButton().objectName(),
                                        self.coordinate_check_group.checkedButton().objectName())
+
+
+# TODO: Convert the values in the line cut position entries when switching coordinate systems
