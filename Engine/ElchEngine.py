@@ -21,9 +21,17 @@ class ElchEngine:
         self.wl = 1.5405980
         self.k = 2 * np.pi / self.wl
 
+        self.qy_range = None
+        self.qz_range = None
+        self.om_range = None
+        self.tt_range = None
+
         signals_gui.load_file.connect(self.load_file)
         signals_gui.get_angle_map.connect(lambda: signals_engine.map_data_angle.emit(self.get_angle_data()))
         signals_gui.get_q_map.connect(lambda: signals_engine.map_data_q.emit(self.get_q_data()))
+        signals_gui.get_angle_map.connect(lambda: signals_engine.line_Scan_2D.emit({'x': self.om_range, 'y': self.tt_range}))
+        signals_gui.get_q_map.connect(lambda: signals_engine.line_Scan_2D.emit({'x': self.qy_range, 'y': self.qz_range}))
+
         signals_gui.get_line_scan.connect(self.get_line_scan)
         signals_gui.q_to_ang.connect(self.q_to_ang)
         signals_gui.ang_to_q.connect(self.ang_to_q)
@@ -81,8 +89,11 @@ class ElchEngine:
             case 'Reciprocal Vectors':
                 qy = pos_1
                 qz = pos_2
+                om, tt = self._qta(qy, qz)
             case 'Angles':
-                qy, qz = self._atq(pos_1, pos_2)
+                om = pos_1
+                tt = pos_2
+                qy, qz = self._atq(om, tt)
 
         match int_dir:
             case 'Omega':
@@ -96,22 +107,65 @@ class ElchEngine:
 
         match scan_type:
             case 'Q Parallel':
-                x, y, _ = xu.analysis.line_cuts.get_qy_scan([self.q_para, self.q_norm], self.q_counts, qz, self.res,
-                                                            int_dist, intdir=int_dir)
-                signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_parallel'})
+                try:
+                    x, y, _ = xu.analysis.line_cuts.get_qy_scan([self.q_para, self.q_norm], self.q_counts, qz, self.res,
+                                                                int_dist, intdir=int_dir)
+                    self.qy_range = x
+                    self.qz_range = np.full_like(self.qy_range, qz)
+                    self.om_range, self.tt_range = self._qta(self.qy_range, self.qz_range)
+                    signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_parallel'})
+                except ValueError:
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+
             case 'Q Normal':
-                x, y, _ = xu.analysis.line_cuts.get_qz_scan([self.q_para, self.q_norm], self.q_counts, qy, self.res,
+                try:
+                    x, y, _ = xu.analysis.line_cuts.get_qz_scan([self.q_para, self.q_norm], self.q_counts, qy, self.res,
                                                             int_dist, intdir=int_dir)
-                signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_normal'})
+                    self.qz_range = x
+                    self.qy_range = np.full_like(self.qz_range, qy)
+                    self.om_range, self.tt_range = self._qta(self.qy_range, self.qz_range)
+                    signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_normal'})
+                except ValueError:
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+
             case 'Omega':
-                x, y, _ = xu.analysis.line_cuts.get_omega_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                               self.res, int_dist, intdir=int_dir)
-                signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'omega'})
+                try:
+                    x, y, _ = xu.analysis.line_cuts.get_omega_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
+                                                                   self.res, int_dist, intdir=int_dir)
+                    self.om_range = x
+                    self.tt_range = np.full_like(self.om_range, tt)
+                    self.qz_range, self.qy_range = self._atq(self.om_range, self.tt_range)
+                    signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'omega'})
+                except ValueError:
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+
             case '2 Theta':
-                x, y, _ = xu.analysis.line_cuts.get_ttheta_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                                self.res, int_dist, intdir=int_dir)
-                signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': '2theta'})
+                try:
+                    x, y, _ = xu.analysis.line_cuts.get_ttheta_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
+                                                                    self.res, int_dist, intdir=int_dir)
+                    signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': '2theta'})
+                    self.tt_range = x
+                    self.om_range = np.full_like(self.tt_range, om)
+                    self.qz_range, self.qy_range = self._atq(self.om_range, self.tt_range)
+                except ValueError:
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+
             case 'Radial':
-                x, y, _ = xu.analysis.line_cuts.get_radial_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
-                                                                self.res, int_dist, intdir=int_dir)
-                signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'radial'})
+                try:
+                    x, y, _ = xu.analysis.line_cuts.get_radial_scan([self.q_para, self.q_norm], self.q_counts, [qy, qz],
+                                                                    self.res, int_dist, intdir=int_dir)
+                    signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'radial'})
+
+                    tau = 90 + tt/2 - om
+                    self.tt_range = x
+                    self.om_range = np.full_like(self.tt_range, 90 + self.tt_range - tau)
+                    self.qz_range, self.qy_range = self._atq(self.om_range, self.tt_range)
+
+                except ValueError:
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+
+        match coord_type:
+            case 'Reciprocal Vectors':
+                signals_engine.line_Scan_2D.emit({'x': self.qy_range, 'y': self.qz_range})
+            case 'Angles':
+                signals_engine.line_Scan_2D.emit({'x': self.om_range, 'y': self.tt_range})

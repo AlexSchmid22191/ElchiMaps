@@ -12,15 +12,19 @@ class ElchContourPlot(ElchPlot):
         self.norm = 'linear'
         self.color = 'magma'
         self.colormesh = None
+        self.line, = self.ax.plot([], [], '-', lw=1, color='#7b8ccb')
 
         signals_engine.map_data_angle.connect(self.plot_angle_map)
         signals_engine.map_data_q.connect(self.plot_q_map)
+        signals_engine.line_Scan_2D.connect(self.plot_line_cut)
 
     def plot_angle_map(self, data):
         self.coordinates = 'Angles'
         if all(value is not None for value in data.values()):
             if self.colormesh is not None:
                 self.colormesh.remove()
+            if self.line is not None:
+                self.line.set_data([], [])
             self.ax.relim()
             self.colormesh = self.ax.pcolormesh(data['om'], data['tt'], data['counts'], cmap=self.color, norm=self.norm)
         self.ax.set_xlabel(r'$\omega\ (\degree)$')
@@ -32,6 +36,8 @@ class ElchContourPlot(ElchPlot):
         if all(value is not None for value in data.values()):
             if self.colormesh is not None:
                 self.colormesh.remove()
+            if self.line is not None:
+                self.line.set_data([], [])
             self.ax.relim()
             self.colormesh = self.ax.pcolormesh(data['q_para'], data['q_norm'], data['q_counts'], cmap=self.color,
                                                 norm=self.norm)
@@ -61,3 +67,9 @@ class ElchContourPlot(ElchPlot):
                 signals_gui.get_angle_map.emit()
             case 'Reciprocal':
                 signals_gui.get_q_map.emit()
+
+    def plot_line_cut(self, data):
+        if all(value is not None for value in data.values()):
+            if self.line is not None:
+                self.line.set_data(data['x'], data['y'])
+            self.draw()
