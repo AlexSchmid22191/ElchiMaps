@@ -72,7 +72,7 @@ class ElchEngine:
     def _qta(self, qy, qz):
         q = np.sqrt(qy ** 2 + qz ** 2)
         tt = 2 * np.arcsin(q / self.k / 2) * 180 / np.pi
-        om = np.arccos(qy / self.k) * 180 / np.pi - 90 + tt / 2
+        om = np.arccos(-qy / q) * 180 / np.pi - 90 + tt / 2
         return om, tt
 
     def ang_to_q(self, om, tt):
