@@ -42,7 +42,8 @@ class ElchEngine:
         self.om = self.raw_file.scan.ddict['Omega']
         self.om = np.broadcast_to(self.om.reshape(-1, 1), self.tt.shape)
         self.counts = self.raw_file.scan.ddict['counts']
-
+        if self.counts.shape == (0,):
+            self.counts = self.raw_file.scan.ddict['detector']
         self.ang_map_to_q_map()
 
         signals_engine.map_data_angle.emit(self.get_angle_data())
