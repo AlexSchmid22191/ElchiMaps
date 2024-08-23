@@ -31,13 +31,13 @@ ElchTitlebar QToolButton#Minimize:hover{background: url(Interface/Icons/Minimize
 ElchRibbon{background-color:#2A2D56;}
 ElchRibbon QPushButton:checked{background-color: #181C3F}
 
-ElchRibbon QPushButton#File{border-image: url(Interface/Icons/Devices.png)}
-ElchRibbon QPushButton#File:hover{border-image: url(Interface/Icons/Devices_Glow.png)}
-ElchRibbon QPushButton#File:checked{border-image: url(Interface/Icons/Devices_Glow.png)}
+ElchRibbon QPushButton#ESV{border-image: url(Interface/Icons/ESV.png)}
+ElchRibbon QPushButton#ESV:hover{border-image: url(Interface/Icons/ESV_Glow.png)}
+ElchRibbon QPushButton#ESV:checked{border-image: url(Interface/Icons/ESV_Glow.png)}
 
-ElchRibbon QPushButton#Plotting{border-image: url(Interface/Icons/Plotting.png)}
-ElchRibbon QPushButton#Plotting:hover{border-image: url(Interface/Icons/Plotting_Glow.png)}
-ElchRibbon QPushButton#Plotting:checked{border-image: url(Interface/Icons/Plotting_Glow.png)}
+ElchRibbon QPushButton#RSM{border-image: url(Interface/Icons/RSM.png)}
+ElchRibbon QPushButton#RSM:hover{border-image: url(Interface/Icons/RSM_Glow.png)}
+ElchRibbon QPushButton#RSM:checked{border-image: url(Interface/Icons/RSM_Glow.png)}
 
 /*Styling of the ElchMenu*/
 ElchMenu{background-color: #2A2D56;}

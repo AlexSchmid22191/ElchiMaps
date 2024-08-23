@@ -12,7 +12,7 @@ class ElchRibbon(QWidget):
         self.menu_buttons = {key: QPushButton(parent=self, objectName=key) for key in self.menus}
         self.buttongroup = QButtonGroup()
         elchicon = QLabel()
-        elchicon.setPixmap(QPixmap('Interface/Icons/ElchiHead.png'))
+        elchicon.setPixmap(QPixmap('Interface/Icons/ElchiHead_NoText_Green.png'))
 
         vbox = QVBoxLayout()
         vbox.addWidget(elchicon, alignment=Qt.AlignHCenter)
