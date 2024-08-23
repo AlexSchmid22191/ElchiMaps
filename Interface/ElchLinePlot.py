@@ -1,5 +1,3 @@
-from lib2to3.fixes.fix_metaclass import remove_trailing_newline
-
 from Interface.ElchPlot import ElchPlot
 from Signals.Signals import signals_engine
 import matplotlib.ticker as mpt
