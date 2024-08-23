@@ -74,6 +74,7 @@ class ElchMainWindow(QWidget):
         self.controlmenu.menus['Plotting'].buttons['Autoscale'].clicked.connect(self.lineframe.autoscale)
 
         self.controlmenu.menus['Plotting'].normalize_group.buttonClicked.connect(self.contourframe.set_norm)
+        self.controlmenu.menus['Plotting'].normalize_group.buttonClicked.connect(self.lineframe.set_norm)
         self.controlmenu.menus['Plotting'].color_select.currentTextChanged.connect(self.contourframe.set_color)
 
         self.setLayout(hbox_outer)

@@ -1,3 +1,5 @@
+from lib2to3.fixes.fix_metaclass import remove_trailing_newline
+
 from Interface.ElchPlot import ElchPlot
 from Signals.Signals import signals_engine
 import matplotlib.ticker as mpt
@@ -9,12 +11,12 @@ class ElchLinePlot(ElchPlot):
 
         self.coordinates = 'Angles'
         self.scale = 'linear'
-        self.line = None
+        self.line, = self.ax.plot([1], [1])
         signals_engine.line_scan_1D.connect(self.plot_line)
         self.ax.set_ylabel('Intensity (a.u.)')
 
         self.ax.yaxis.set_major_formatter(mpt.FuncFormatter(self.fancy_sci_formatter))
-        self.ax.set_xlim(0, 1e5)
+        self.ax.set_xlim(1, 100)
         self.autoscale()
 
     def plot_line(self, data):
@@ -44,3 +46,14 @@ class ElchLinePlot(ElchPlot):
         coeff, expo = e_string.split('e')
         expo = int(expo)
         return fr'${coeff}\cdot 10^{expo}$'
+
+    def set_norm(self, norm):
+        match norm.objectName():
+            case 'Linear':
+                self.ax.set_yscale('linear')
+            case 'Logarithmic':
+                self.ax.set_yscale('log')
+            case 'Square Root':
+                self.ax.set_yscale('function', functions=(lambda x: x**0.5, lambda x: x**2))
+        self.autoscale()
+
