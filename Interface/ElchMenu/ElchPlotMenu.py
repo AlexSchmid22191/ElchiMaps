@@ -31,9 +31,9 @@ class ElchPlotMenu(QWidget):
 
         self.para_box_label = QLabel(text='Omega')
         self.norm_box_label = QLabel(text='2 Theta')
-        self.line_box_para = QDoubleSpinBox(decimals=4, singleStep=1e-3, minimum=-180, maximum=180, suffix=u'°',
+        self.line_box_para = QDoubleSpinBox(decimals=4, singleStep=1e-2, minimum=-180, maximum=180, suffix=u'°',
                                             value=30)
-        self.line_box_norm = QDoubleSpinBox(decimals=4, singleStep=1e-3, minimum=-180, maximum=180, suffix=u'°',
+        self.line_box_norm = QDoubleSpinBox(decimals=4, singleStep=1e-2, minimum=-180, maximum=180, suffix=u'°',
                                             value=60)
 
         self.color_select = QComboBox()
@@ -111,6 +111,7 @@ class ElchPlotMenu(QWidget):
             case 'Angles':
                 for box in [self.line_box_para, self.line_box_norm]:
                     box.setSuffix('°')
+                    box.setSingleStep(1e-2)
                 self.para_box_label.setText('Omega')
                 self.norm_box_label.setText('2 Theta')
                 signals_gui.q_to_ang.emit(self.line_box_para.value(), self.line_box_norm.value())
@@ -119,6 +120,7 @@ class ElchPlotMenu(QWidget):
             case 'Reciprocal Vectors':
                 for box in [self.line_box_para, self.line_box_norm]:
                     box.setSuffix(u' Å⁻¹')
+                    box.setSingleStep(1e-3)
                 self.para_box_label.setText('q parallel')
                 self.norm_box_label.setText('q normal')
                 signals_gui.ang_to_q.emit(self.line_box_para.value(), self.line_box_norm.value())
