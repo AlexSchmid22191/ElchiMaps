@@ -1,16 +1,22 @@
+import os
+from PySide6.QtCore import Qt
 import matplotlib.pyplot as plt
 from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, \
-    QHBoxLayout, QComboBox
-
+    QHBoxLayout, QComboBox, QFileDialog
 from Signals.Signals import signals_gui, signals_engine
 
 
-class ElchPlotMenu(QWidget):
+class ElchMenu(QWidget):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
-        self.buttons = {key: QPushButton(parent=self, text=key, objectName=key) for key in ['Autoscale', 'Zoom']}
-        self.buttons['Zoom'].setCheckable(True)
+        super().__init__(*args, **kwargs)
+        self.setFixedWidth(260)
+        self.setAttribute(Qt.WA_StyledBackground, True)
+
+        self.file_button = QPushButton(parent=self, text='Open File', objectName='Open File')
+
+        self.plot_buttons = {key: QPushButton(parent=self, text=key, objectName=key) for key in ['Autoscale', 'Zoom']}
+        self.plot_buttons['Zoom'].setCheckable(True)
 
         self.coordinate_checks = {key: QRadioButton(parent=self, text=key, objectName=key)
                                   for key in ['Angles', 'Reciprocal Vectors']}
@@ -43,7 +49,16 @@ class ElchPlotMenu(QWidget):
         self.int_dir_select.addItems(['2 Theta', 'Radial'])
         self.int_dist_select = QDoubleSpinBox(decimals=3, singleStep=1e-3, minimum=0, value=0.01)
 
+        self.export_buttons = {key: QPushButton(parent=self, text=key, objectName=key)
+                               for key in ['Export Images', 'Export Data']}
+
+        self.file_open_path = os.path.expanduser('~')
+
         vbox = QVBoxLayout()
+        vbox.addWidget(QLabel(text='File input', objectName='Header'))
+        vbox.addWidget(self.file_button)
+        vbox.addSpacing(20)
+
         vbox.addWidget(QLabel(text='Coordinate System', objectName='Header'))
         for key, button in self.coordinate_checks.items():
             self.coordinate_check_group.addButton(button)
@@ -85,7 +100,11 @@ class ElchPlotMenu(QWidget):
         vbox.addSpacing(20)
 
         vbox.addWidget(QLabel(text='Plotting Control', objectName='Header'))
-        for button in self.buttons.values():
+        for button in self.plot_buttons.values():
+            vbox.addWidget(button)
+
+        vbox.addWidget(QLabel(text='File export', objectName='Header'))
+        for button in self.export_buttons.values():
             vbox.addWidget(button)
 
         vbox.addStretch()
@@ -99,6 +118,7 @@ class ElchPlotMenu(QWidget):
         self.line_check_group.buttonClicked.connect(self.on_scan_select)
         self.int_dist_select.valueChanged.connect(self.request_line_scan)
         self.int_dir_select.currentTextChanged.connect(self.on_int_dir_select)
+        self.file_button.clicked.connect(self.open_file)
 
         self.coordinate_checks['Angles'].setChecked(True)
         self.line_checks['Omega'].setChecked(True)
@@ -174,3 +194,10 @@ class ElchPlotMenu(QWidget):
         self.line_box_norm.setValue(pos_norm)
         for box in [self.line_box_para, self.line_box_norm]:
             box.blockSignals(False)
+
+    def open_file(self):
+        filepath, *_ = QFileDialog.getOpenFileName(self, 'Select XRDML file', self.file_open_path,
+                                                   'XRDML files (*.xrdml)')
+        self.file_open_path = os.path.dirname(filepath)
+        if filepath.endswith('.xrdml'):
+            signals_gui.load_file.emit(filepath)

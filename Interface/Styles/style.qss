@@ -96,13 +96,13 @@ ElchDeviceMenu QPushButton{icon: url(Interface/Icons/Connect.png)}
 ElchDeviceMenu QPushButton:hover{icon: url(Interface/Icons/Connect_Glow.png)}
 ElchDeviceMenu QPushButton:checked{icon: url(Interface/Icons/Connect_Glow.png)}
 
-ElchPlotMenu QPushButton#Start{icon: url(Interface/Icons/Start.png)}
-ElchPlotMenu QPushButton#Start:hover{icon: url(Interface/Icons/Start_Glow.png)}
-ElchPlotMenu QPushButton#Start:checked{icon: url(Interface/Icons/Start_Glow.png)}
-ElchPlotMenu QPushButton#Clear{icon: url(Interface/Icons/Clear.png)}
-ElchPlotMenu QPushButton#Clear:hover{icon: url(Interface/Icons/Clear_Glow.png)}
-ElchPlotMenu QPushButton#Export{icon: url(Interface/Icons/Export.png)}
-ElchPlotMenu QPushButton#Export:hover{icon: url(Interface/Icons/Export_Glow.png)}
+ElchMenu QPushButton#Start{icon: url(Interface/Icons/Start.png)}
+ElchMenu QPushButton#Start:hover{icon: url(Interface/Icons/Start_Glow.png)}
+ElchMenu QPushButton#Start:checked{icon: url(Interface/Icons/Start_Glow.png)}
+ElchMenu QPushButton#Clear{icon: url(Interface/Icons/Clear.png)}
+ElchMenu QPushButton#Clear:hover{icon: url(Interface/Icons/Clear_Glow.png)}
+ElchMenu QPushButton#Export{icon: url(Interface/Icons/Export.png)}
+ElchMenu QPushButton#Export:hover{icon: url(Interface/Icons/Export_Glow.png)}
 
 ElchProgramMenu QPushButton#Start{icon: url(Interface/Icons/Start.png)}
 ElchProgramMenu QPushButton#Start:hover{icon: url(Interface/Icons/Start_Glow.png)}
