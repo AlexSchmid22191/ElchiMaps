@@ -96,16 +96,15 @@ class ElchPlotMenu(QWidget):
         self.coordinate_check_group.buttonClicked.connect(self.change_coordinates)
         self.line_box_para.valueChanged.connect(self.request_line_scan)
         self.line_box_norm.valueChanged.connect(self.request_line_scan)
-        self.line_check_group.buttonClicked.connect(self.request_line_scan)
+        self.line_check_group.buttonClicked.connect(self.on_scan_select)
         self.int_dist_select.valueChanged.connect(self.request_line_scan)
-        self.int_dir_select.currentTextChanged.connect(self.request_line_scan)
-        self.int_dir_select.currentTextChanged.connect(self.update_int_dist)
+        self.int_dir_select.currentTextChanged.connect(self.on_int_dir_select)
 
         self.coordinate_checks['Angles'].setChecked(True)
         self.line_checks['Omega'].setChecked(True)
         signals_gui.load_file.connect(lambda: self.coordinate_checks['Angles'].setChecked(True))
-        signals_engine.q_to_ang.connect(self._update_line_cut_boxes)
-        signals_engine.ang_to_q.connect(self._update_line_cut_boxes)
+        signals_engine.q_to_ang.connect(self.update_line_cut_boxes)
+        signals_engine.ang_to_q.connect(self.update_line_cut_boxes)
 
     def change_coordinates(self, button):
         match button.objectName():
@@ -125,20 +124,22 @@ class ElchPlotMenu(QWidget):
                 signals_gui.ang_to_q.emit(self.line_box_para.value(), self.line_box_norm.value())
                 signals_gui.get_q_map.emit()
 
-    def _update_line_cut_boxes(self, pos_para, pos_norm):
-        for box in [self.line_box_para, self.line_box_norm]:
-            box.blockSignals(True)
-        self.line_box_para.setValue(pos_para)
-        self.line_box_norm.setValue(pos_norm)
-        for box in [self.line_box_para, self.line_box_norm]:
-            box.blockSignals(False)
-
     def request_line_scan(self):
         signals_gui.get_line_scan.emit(self.line_box_para.value(), self.line_box_norm.value(),
                                        self.int_dist_select.value(), self.line_check_group.checkedButton().objectName(),
                                        self.coordinate_check_group.checkedButton().objectName(),
                                        self.int_dir_select.currentText())
 
+    def on_scan_select(self):
+        self.update_int_dir()
+        self.update_int_dist()
+        self.request_line_scan()
+
+    def on_int_dir_select(self):
+        self.update_int_dist()
+        self.request_line_scan()
+
+    def update_int_dir(self):
         self.int_dir_select.blockSignals(True)
         self.int_dir_select.clear()
         match self.line_check_group.checkedButton().objectName():
@@ -154,9 +155,20 @@ class ElchPlotMenu(QWidget):
                 self.int_dir_select.addItems(['Q Normal', '2 Theta', 'Omega'])
         self.int_dir_select.blockSignals(False)
 
-    def update_int_dist(self, int_dir):
+    def update_int_dist(self):
+        int_dir = self.int_dir_select.currentText()
+        self.int_dist_select.blockSignals(True)
         match int_dir:
             case 'Omega' | '2 Theta' | 'Radial':
                 self.int_dist_select.setSuffix('°')
             case 'Q Parallel' | 'Q Normal':
                 self.int_dist_select.setSuffix(u' Å⁻¹')
+        self.int_dist_select.blockSignals(False)
+
+    def update_line_cut_boxes(self, pos_para, pos_norm):
+        for box in [self.line_box_para, self.line_box_norm]:
+            box.blockSignals(True)
+        self.line_box_para.setValue(pos_para)
+        self.line_box_norm.setValue(pos_norm)
+        for box in [self.line_box_para, self.line_box_norm]:
+            box.blockSignals(False)
