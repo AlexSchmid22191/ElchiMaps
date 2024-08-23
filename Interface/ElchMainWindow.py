@@ -7,6 +7,7 @@ from Interface.ElchLinePlot import ElchLinePlot
 from Interface.ElchMenu import ElchMenu
 from Interface.ElchRibbon import ElchRibbon
 from Interface.ElchTitleBar import ElchTitlebar
+from Interface.ElchEwald import ElchEwald
 
 
 class ElchMainWindow(QWidget):
@@ -26,6 +27,8 @@ class ElchMainWindow(QWidget):
         self.lineframe = ElchLinePlot()
         self.contourframe = ElchContourPlot()
         self.ribbon = ElchRibbon(menus=['RSM', 'ESV'])
+        self.ewald = ElchEwald()
+        self.ewald.setVisible(False)
 
         panel_spacing = 20
 
@@ -41,6 +44,7 @@ class ElchMainWindow(QWidget):
 
         vbox_inner = QVBoxLayout()
         vbox_inner.addLayout(hbox_inner, stretch=1)
+        vbox_inner.addWidget(self.ewald, stretch=1)
         # Here a statusbar could be added in the future
         vbox_inner.setSpacing(panel_spacing)
         vbox_inner.setContentsMargins(panel_spacing, panel_spacing, panel_spacing - 13, panel_spacing)
@@ -64,7 +68,7 @@ class ElchMainWindow(QWidget):
         hbox_outer.setContentsMargins(0, 0, 0, 0)
         hbox_outer.setSpacing(0)
 
-        self.ribbon.buttongroup.buttonToggled.connect(self.adjust_visibility)
+        self.ribbon.buttongroup.buttonClicked.connect(self.adjust_visibility)
         self.ribbon.menu_buttons['RSM'].setChecked(True)
 
         self.controlmenu.plot_buttons['Zoom'].toggled.connect(self.contourframe.toggle_zoom)
@@ -82,4 +86,15 @@ class ElchMainWindow(QWidget):
         self.show()
 
     def adjust_visibility(self, button):
-        print(button)
+        match button.objectName():
+            case 'ESV':
+                self.contourframe.setVisible(False)
+                self.lineframe.setVisible(False)
+                self.controlmenu.setVisible(False)
+                self.ewald.setVisible(True)
+            case 'RSM':
+                self.contourframe.setVisible(True)
+                self.lineframe.setVisible(True)
+                self.controlmenu.setVisible(True)
+                self.ewald.setVisible(False)
+
