@@ -53,12 +53,9 @@ class ElchEngine:
     def ang_map_to_q_map(self):
         q_para, q_norm = self._atq(self.om, self.tt)
         self.res = np.min(self.tt.shape)
-        gd = xu.Gridder2D(self.res, self.res)
-        gd(q_para, q_norm, self.counts)
-
-        self.q_para = gd.xmatrix
-        self.q_norm = gd.ymatrix
-        self.q_counts = gd.data
+        self.q_para = q_para
+        self.q_norm = q_norm
+        self.q_counts = self.counts
 
     def get_angle_data(self):
         return {'om': self.om, 'tt': self.tt, 'counts': self.counts}
