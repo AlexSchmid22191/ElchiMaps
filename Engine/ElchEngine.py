@@ -29,8 +29,10 @@ class ElchEngine:
         signals_gui.load_file.connect(self.load_file)
         signals_gui.get_angle_map.connect(lambda: signals_engine.map_data_angle.emit(self.get_angle_data()))
         signals_gui.get_q_map.connect(lambda: signals_engine.map_data_q.emit(self.get_q_data()))
-        signals_gui.get_angle_map.connect(lambda: signals_engine.line_Scan_2D.emit({'x': self.om_range, 'y': self.tt_range}))
-        signals_gui.get_q_map.connect(lambda: signals_engine.line_Scan_2D.emit({'x': self.qy_range, 'y': self.qz_range}))
+        signals_gui.get_angle_map.connect(
+            lambda: signals_engine.line_Scan_2D.emit({'x': self.om_range, 'y': self.tt_range}))
+        signals_gui.get_q_map.connect(
+            lambda: signals_engine.line_Scan_2D.emit({'x': self.qy_range, 'y': self.qz_range}))
 
         signals_gui.get_line_scan.connect(self.get_line_scan)
         signals_gui.q_to_ang.connect(self.q_to_ang)
@@ -121,7 +123,7 @@ class ElchEngine:
             case 'Q Normal':
                 try:
                     x, y, _ = xu.analysis.line_cuts.get_qz_scan([self.q_para, self.q_norm], self.q_counts, qy, self.res,
-                                                            int_dist, intdir=int_dir)
+                                                                int_dist, intdir=int_dir)
                     self.qz_range = x
                     self.qy_range = np.full_like(self.qz_range, qy)
                     self.om_range, self.tt_range = self._qta(self.qy_range, self.qz_range)
@@ -135,7 +137,7 @@ class ElchEngine:
                                                                    self.res, int_dist, intdir=int_dir)
                     self.om_range = x
                     self.tt_range = np.full_like(self.om_range, tt)
-                    self.qz_range, self.qy_range = self._atq(self.om_range, self.tt_range)
+                    self.qy_range, self.qz_range = self._atq(self.om_range, self.tt_range)
                     signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'omega'})
                 except ValueError:
                     self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
@@ -147,7 +149,7 @@ class ElchEngine:
                     signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': '2theta'})
                     self.tt_range = x
                     self.om_range = np.full_like(self.tt_range, om)
-                    self.qz_range, self.qy_range = self._atq(self.om_range, self.tt_range)
+                    self.qy_range, self.qz_range = self._atq(self.om_range, self.tt_range)
                 except ValueError:
                     self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
 
@@ -157,11 +159,11 @@ class ElchEngine:
                                                                     self.res, int_dist, intdir=int_dir)
                     signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'radial'})
 
-                    tau = 90 + tt/2 - om
+                    om_cut, tt_cut = self._qta(qy, qz)
+                    const_ang = om_cut + 90 - tt_cut/2
                     self.tt_range = x
-                    self.om_range = np.full_like(self.tt_range, 90 + self.tt_range - tau)
-                    self.qz_range, self.qy_range = self._atq(self.om_range, self.tt_range)
-
+                    self.om_range = np.full_like(self.tt_range, const_ang+self.tt_range/2 - 90)
+                    self.qy_range, self.qz_range = self._atq(self.om_range, self.tt_range)
                 except ValueError:
                     self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
 
