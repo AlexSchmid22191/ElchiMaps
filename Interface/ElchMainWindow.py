@@ -3,11 +3,11 @@ from PySide6.QtGui import QFontDatabase
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QSizeGrip
 
 from Interface.ElchContourPlot import ElchContourPlot
+from Interface.ElchEwald import ElchEwald
 from Interface.ElchLinePlot import ElchLinePlot
 from Interface.ElchMenu import ElchMenu
 from Interface.ElchRibbon import ElchRibbon
 from Interface.ElchTitleBar import ElchTitlebar
-from Interface.ElchEwald import ElchEwald
 
 
 class ElchMainWindow(QWidget):
@@ -97,4 +97,3 @@ class ElchMainWindow(QWidget):
                 self.lineframe.setVisible(True)
                 self.controlmenu.setVisible(True)
                 self.ewald.setVisible(False)
-

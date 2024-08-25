@@ -107,3 +107,8 @@ ElchMenu QPushButton#Export:hover{icon: url(Interface/Icons/Export_Glow.png)}
 ElchProgramMenu QPushButton#Start{icon: url(Interface/Icons/Start.png)}
 ElchProgramMenu QPushButton#Start:hover{icon: url(Interface/Icons/Start_Glow.png)}
 ElchProgramMenu QPushButton#Start:checked{icon: url(Interface/Icons/Start_Glow.png)}
+
+/*Styling of the EwaldContro*/
+ElchEwaldControl{background-color: #2A2D56;}
+ElchEwaldControl QLabel{color: #7b8ccb; font: 11pt "Roboto Light";}
+ElchEwaldControl QLabel#Header{font: 14pt "Roboto"}

@@ -37,6 +37,7 @@ class ElchEngine:
         signals_gui.get_line_scan.connect(self.get_line_scan)
         signals_gui.q_to_ang.connect(self.q_to_ang)
         signals_gui.ang_to_q.connect(self.ang_to_q)
+        signals_gui.get_ewald.connect(self.get_ewald_data)
 
     def load_file(self, path):
         self.raw_file = xu.io.XRDMLFile(path)
@@ -157,9 +158,9 @@ class ElchEngine:
                     signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'radial'})
 
                     om_cut, tt_cut = self._qta(qy, qz)
-                    const_ang = om_cut + 90 - tt_cut/2
+                    const_ang = om_cut + 90 - tt_cut / 2
                     self.tt_range = x
-                    self.om_range = np.full_like(self.tt_range, const_ang+self.tt_range/2 - 90)
+                    self.om_range = np.full_like(self.tt_range, const_ang + self.tt_range / 2 - 90)
                     self.qy_range, self.qz_range = self._atq(self.om_range, self.tt_range)
                 except ValueError:
                     self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
@@ -169,3 +170,45 @@ class ElchEngine:
                 signals_engine.line_Scan_2D.emit({'x': self.qy_range, 'y': self.qz_range})
             case 'Angles':
                 signals_engine.line_Scan_2D.emit({'x': self.om_range, 'y': self.tt_range})
+
+    @staticmethod
+    def get_ewald_data(om, tt, wl):
+        k = 2 * np.pi / wl
+        ang = np.linspace(0, np.pi, 100, True)
+        om = np.deg2rad(om)
+        tt = np.deg2rad(tt)
+
+        small_ewald_x_l = -k * np.cos(ang) - k
+        small_ewald_x_r = -k * np.cos(ang) + k
+        small_ewald_y = k * np.sin(ang)
+        large_ewald_x = 2 * k * np.cos(ang)
+        large_ewald_y = 2 * k * np.sin(ang)
+
+        dx_in = k * np.cos(om)
+        dy_in = -k * np.sin(om)
+        dx_out = k * (np.cos(tt - om))
+        dy_out = k * (np.sin(tt - om))
+        dx_q = dx_out - dx_in
+        dy_q = dy_out - dy_in
+
+        x_in_1 = -dx_in
+        y_in_1 = -dy_in
+        x_in_2 = dx_out - dx_in
+        y_in_2 = dy_out - dy_in
+        x_out_1 = 0
+        y_out_1 = 0
+        x_out_2 = -dx_in
+        y_out_2 = -dy_in
+        x_q = 0
+        y_q = 0
+
+        results = {'ewald': {'small_ewald_x_l': small_ewald_x_l, 'small_ewald_x_r': small_ewald_x_r,
+                             'small_ewald_y': small_ewald_y, 'large_ewald_x': large_ewald_x,
+                             'large_ewald_y': large_ewald_y},
+                   'vectors': {'in_1': [x_in_1, y_in_1, dx_in, dy_in],
+                               'in_2': [x_in_2, y_in_2, dx_in, dy_in],
+                               'out_1': [x_out_1, y_out_1, dx_out, dy_out],
+                               'out_2': [x_out_2, y_out_2, dx_out, dy_out],
+                               'q': [x_q, y_q, dx_q, dy_q]}}
+
+        signals_engine.ewald.emit(results)

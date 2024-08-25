@@ -8,6 +8,7 @@ class GuiSignals(QObject):
     get_line_scan = Signal(float, float, float, str, str, str)
     ang_to_q = Signal(float, float)
     q_to_ang = Signal(float, float)
+    get_ewald = Signal(float, float, float)
 
 
 class EngineSignals(QObject):
@@ -17,6 +18,7 @@ class EngineSignals(QObject):
     line_Scan_2D = Signal(dict)
     ang_to_q = Signal(float, float)
     q_to_ang = Signal(float, float)
+    ewald = Signal(dict)
 
 
 signals_engine = EngineSignals()

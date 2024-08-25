@@ -1,6 +1,7 @@
+import matplotlib.ticker as mpt
+
 from Interface.ElchPlot import ElchPlot
 from Signals.Signals import signals_engine
-import matplotlib.ticker as mpt
 
 
 class ElchLinePlot(ElchPlot):
@@ -52,6 +53,5 @@ class ElchLinePlot(ElchPlot):
             case 'Logarithmic':
                 self.ax.set_yscale('log')
             case 'Square Root':
-                self.ax.set_yscale('function', functions=(lambda x: x**0.5, lambda x: x**2))
+                self.ax.set_yscale('function', functions=(lambda x: x ** 0.5, lambda x: x ** 2))
         self.autoscale()
-

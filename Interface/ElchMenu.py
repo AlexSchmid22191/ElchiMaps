@@ -1,8 +1,10 @@
 import os
-from PySide6.QtCore import Qt
+
 import matplotlib.pyplot as plt
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, \
     QHBoxLayout, QComboBox, QFileDialog
+
 from Signals.Signals import signals_gui, signals_engine
 
 
