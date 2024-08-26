@@ -13,6 +13,7 @@ class ElchEwald(QWidget):
         self.control_frame = ElchEwaldControl()
 
         vbox = QVBoxLayout()
+
         vbox.addWidget(self.plot_frame)
         vbox.addWidget(self.control_frame)
         vbox.setContentsMargins(0, 0, 0, 0)

@@ -84,12 +84,12 @@ ElchMenu QRadioButton::indicator:checked{image: url(Interface/Icons/Radio_On.png
 ElchMenu QRadioButton::indicator:checked:hover{image: url(Interface/Icons/Radio_On_Glow.png)}
 
 /*Checkboxes*/
-ElchMenu QCheckBox{color: #7b8ccb; font: 11pt "Roboto Light"}
-ElchMenu QCheckBox::indicator{width:15px; height: 15px}
-ElchMenu QCheckBox::indicator:unchecked{image: url(Interface/Icons/Radio_Off.png)}
-ElchMenu QCheckBox::indicator:unchecked:hover{image: url(Interface/Icons/Radio_Off_Glow.png)}
-ElchMenu QCheckBox::indicator:checked{image: url(Interface/Icons/Radio_On.png)}
-ElchMenu QCheckBox::indicator:checked:hover{image: url(Interface/Icons/Radio_On_Glow.png)}
+QCheckBox{color: #7b8ccb; font: 11pt "Roboto Light"}
+QCheckBox::indicator{width:15px; height: 15px}
+QCheckBox::indicator:unchecked{image: url(Interface/Icons/Radio_Off.png)}
+QCheckBox::indicator:unchecked:hover{image: url(Interface/Icons/Radio_Off_Glow.png)}
+QCheckBox::indicator:checked{image: url(Interface/Icons/Radio_On.png)}
+QCheckBox::indicator:checked:hover{image: url(Interface/Icons/Radio_On_Glow.png)}
 
 /* Menu specific icons on buttons*/
 ElchDeviceMenu QPushButton{icon: url(Interface/Icons/Connect.png)}

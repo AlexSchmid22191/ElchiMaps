@@ -10,9 +10,9 @@ class ElchEwaldControl(QWidget):
         super().__init__(*args, **kwargs)
         self.setAttribute(Qt.WA_StyledBackground, True)
 
-        self.om_slider = QSlider(orientation=Qt.Orientation(Qt.Horizontal), value=30)
-        self.tt_slider = QSlider(orientation=Qt.Orientation(Qt.Horizontal), value=60)
-        self.wl_slider = QSlider(orientation=Qt.Orientation(Qt.Horizontal), value=154)
+        self.om_slider = QSlider(orientation=Qt.Orientation(Qt.Horizontal))
+        self.tt_slider = QSlider(orientation=Qt.Orientation(Qt.Horizontal))
+        self.wl_slider = QSlider(orientation=Qt.Orientation(Qt.Horizontal))
         self.om_label = QLabel(text='30°')
         self.tt_label = QLabel(text='60°')
         self.wl_label = QLabel(text='1.54 Å')
@@ -24,8 +24,12 @@ class ElchEwaldControl(QWidget):
         self.om_slider.setMaximum(180)
         self.tt_slider.setMinimum(0)
         self.tt_slider.setMaximum(180)
-        self.wl_slider.setMinimum(50)
-        self.wl_slider.setMaximum(300)
+        self.wl_slider.setMinimum(100)
+        self.wl_slider.setMaximum(200)
+
+        self.om_slider.setValue(30)
+        self.tt_slider.setValue(60)
+        self.wl_slider.setValue(154)
 
         self.const_ang = self.om_slider.value() + 90 - self.tt_slider.value() / 2
 
