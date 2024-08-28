@@ -1,8 +1,6 @@
-from inspect import stack
-
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFontDatabase
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QSizeGrip, QStackedLayout
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QSizeGrip, QStackedWidget
 
 from Interface.ElchEwald import ElchEwald
 from Interface.ElchRSM import ElchRSM
@@ -29,12 +27,12 @@ class ElchMainWindow(QWidget):
 
         panel_spacing = 20
 
-        self.stackbox = QStackedLayout()
+        self.stackbox = QStackedWidget()
         self.stackbox.addWidget(self.rsm)
         self.stackbox.addWidget(self.ewald)
 
         vbox_inner = QVBoxLayout()
-        vbox_inner.addLayout(self.stackbox)
+        vbox_inner.addWidget(self.stackbox)
         # Here a statusbar could be added in the future
         vbox_inner.setSpacing(panel_spacing)
         vbox_inner.setContentsMargins(panel_spacing, panel_spacing, panel_spacing - 13, panel_spacing)
