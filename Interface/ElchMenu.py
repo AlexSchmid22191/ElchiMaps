@@ -5,6 +5,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QPushButton, QRadioButton, QButtonGroup, QVBoxLayout, QLabel, QDoubleSpinBox, \
     QHBoxLayout, QComboBox, QFileDialog
 
+from Interface.ElchExport import ElchExport
 from Signals.Signals import signals_gui, signals_engine
 
 
@@ -55,6 +56,7 @@ class ElchMenu(QWidget):
                                for key in ['Export Images', 'Export Data']}
 
         self.file_open_path = os.path.expanduser('~')
+        self.file_export_path = os.path.expanduser('~')
 
         vbox = QVBoxLayout()
         vbox.addWidget(QLabel(text='File input', objectName='Header'))
@@ -121,6 +123,8 @@ class ElchMenu(QWidget):
         self.int_dist_select.valueChanged.connect(self.request_line_scan)
         self.int_dir_select.currentTextChanged.connect(self.on_int_dir_select)
         self.file_button.clicked.connect(self.open_file)
+
+        self.export_buttons['Export Data'].clicked.connect(self.export_data)
 
         self.coordinate_checks['Angles'].setChecked(True)
         self.line_checks['Omega'].setChecked(True)
@@ -203,3 +207,9 @@ class ElchMenu(QWidget):
         self.file_open_path = os.path.dirname(filepath)
         if filepath.endswith('.xrdml'):
             signals_gui.load_file.emit(filepath)
+
+    def export_data(self):
+        dialog = ElchExport(options=['2D Map', 'Linescan'], last_path=self.file_export_path, file_fmt='.csv',
+                            parent=self)
+        if dialog.exec():
+            self.file_export_path = os.path.dirname(dialog.last_path)

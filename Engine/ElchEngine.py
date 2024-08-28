@@ -16,7 +16,6 @@ class ElchEngine:
 
         self.q_norm = None
         self.q_para = None
-        self.q_counts = None
 
         self.wl = 1.5405980
         self.k = 2 * np.pi / self.wl
@@ -25,6 +24,7 @@ class ElchEngine:
         self.qz_range = None
         self.om_range = None
         self.tt_range = None
+        self.cps_range = None
 
         signals_gui.load_file.connect(self.load_file)
         signals_gui.get_angle_map.connect(lambda: signals_engine.map_data_angle.emit(self.get_angle_data()))
@@ -38,6 +38,7 @@ class ElchEngine:
         signals_gui.q_to_ang.connect(self.q_to_ang)
         signals_gui.ang_to_q.connect(self.ang_to_q)
         signals_gui.get_ewald.connect(self.get_ewald_data)
+        signals_gui.export_data.connect(self.export_data)
 
     def load_file(self, path):
         self.raw_file = xu.io.XRDMLFile(path)
@@ -114,9 +115,10 @@ class ElchEngine:
                     self.qy_range = x
                     self.qz_range = np.full_like(self.qy_range, qz)
                     self.om_range, self.tt_range = self._qta(self.qy_range, self.qz_range)
+                    self.cps_range = y
                     signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_parallel'})
                 except ValueError:
-                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range, self.cps_range = None, None, None, None, None
 
             case 'Q Normal':
                 try:
@@ -126,8 +128,9 @@ class ElchEngine:
                     self.qy_range = np.full_like(self.qz_range, qy)
                     self.om_range, self.tt_range = self._qta(self.qy_range, self.qz_range)
                     signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'q_normal'})
+                    self.cps_range = y
                 except ValueError:
-                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range, self.cps_range = None, None, None, None, None
 
             case 'Omega':
                 try:
@@ -137,8 +140,9 @@ class ElchEngine:
                     self.tt_range = np.full_like(self.om_range, tt)
                     self.qy_range, self.qz_range = self._atq(self.om_range, self.tt_range)
                     signals_engine.line_scan_1D.emit({'x': x, 'y': y, 'x_coord': 'omega'})
+                    self.cps_range = y
                 except ValueError:
-                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range, self.cps_range = None, None, None, None, None
 
             case '2 Theta':
                 try:
@@ -148,8 +152,9 @@ class ElchEngine:
                     self.tt_range = x
                     self.om_range = np.full_like(self.tt_range, om)
                     self.qy_range, self.qz_range = self._atq(self.om_range, self.tt_range)
+                    self.cps_range = y
                 except ValueError:
-                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range, self.cps_range = None, None, None, None, None
 
             case 'Radial':
                 try:
@@ -162,8 +167,9 @@ class ElchEngine:
                     self.tt_range = x
                     self.om_range = np.full_like(self.tt_range, const_ang + self.tt_range / 2 - 90)
                     self.qy_range, self.qz_range = self._atq(self.om_range, self.tt_range)
+                    self.cps_range = y
                 except ValueError:
-                    self.tt_range, self.om_range, self.qy_range, self.qz_range = None, None, None, None
+                    self.tt_range, self.om_range, self.qy_range, self.qz_range, self.cps_range = None, None, None, None, None
 
         match coord_type:
             case 'Reciprocal Vectors':
@@ -212,3 +218,36 @@ class ElchEngine:
                                'q': [x_q, y_q, dx_q, dy_q]}}
 
         signals_engine.ewald.emit(results)
+
+    def export_data(self, export_paths):
+        if '2D Map' in export_paths.keys():
+            if self.raw_file is not None:
+                data_to_export = np.zeros(shape=self.om.size, dtype=np.dtype({'names': ['om', 'tt', 'qp', 'qn', 'cps'],
+                                                                              'formats': [float] * 5}))
+                data_to_export['om'] = self.om.flatten()
+                data_to_export['tt'] = self.tt.flatten()
+                data_to_export['qp'] = self.q_para.flatten()
+                data_to_export['qn'] = self.q_norm.flatten()
+                data_to_export['cps'] = self.counts.flatten()
+
+                headerstring = f'Original data dimensions: {self.om.shape[0]} rows x {self.om.shape[1]} columns\n'
+                headerstring += 'Omega (deg), 2 Theta (deg), q parallel (1/ang.), q normal (1/ang.), counts (1/sec.)\n'
+                headerstring += 'om,tt,qp,qn,cps'
+
+                np.savetxt(export_paths['2D Map'], data_to_export, header=headerstring, fmt='%.6e')
+
+        if 'Linescan' in export_paths.keys():
+            if self.cps_range is not None:
+                data_to_export = np.zeros(shape=self.om_range.size,
+                                          dtype=np.dtype({'names': ['om', 'tt', 'qp', 'qn', 'cps'],
+                                                          'formats': [float] * 5}))
+                data_to_export['om'] = self.om_range
+                data_to_export['tt'] = self.tt_range
+                data_to_export['qp'] = self.qy_range
+                data_to_export['qn'] = self.qz_range
+                data_to_export['cps'] = self.cps_range
+
+                headerstring = 'Omega (deg), 2 Theta (deg), q parallel (1/ang.), q normal (1/ang.), counts (1/sec.)\n'
+                headerstring += 'om,tt,qp,qn,cps'
+
+                np.savetxt(export_paths['Linescan'], data_to_export, header=headerstring, fmt='%.6e')
