@@ -21,17 +21,19 @@ class ElchEwaldControl(QWidget):
         self.rad_check_box = QCheckBox()
 
         self.om_slider.setMinimum(0)
-        self.om_slider.setMaximum(180)
+        self.om_slider.setMaximum(1800)
+        self.om_slider.setSingleStep(10)
         self.tt_slider.setMinimum(0)
-        self.tt_slider.setMaximum(180)
+        self.tt_slider.setMaximum(1800)
+        self.tt_slider.setSingleStep(10)
         self.wl_slider.setMinimum(100)
         self.wl_slider.setMaximum(200)
 
-        self.om_slider.setValue(30)
-        self.tt_slider.setValue(60)
+        self.om_slider.setValue(300)
+        self.tt_slider.setValue(600)
         self.wl_slider.setValue(154)
 
-        self.const_ang = self.om_slider.value() + 90 - self.tt_slider.value() / 2
+        self.const_ang = self.om_slider.value() / 10 + 90 - self.tt_slider.value() / 20
 
         grid_layout = QGridLayout()
         grid_layout.setSpacing(20)
@@ -62,26 +64,26 @@ class ElchEwaldControl(QWidget):
         signals_engine.ang_to_q.connect(self.update_q_labels)
 
     def on_omega_slider(self, *args):
-        self.om_label.setText(f'{self.om_slider.value():}°')
+        self.om_label.setText(f'{self.om_slider.value() / 10:.1f}°')
 
         if self.rad_check_box.isChecked():
-            self.tt_slider.setValue(2 * (self.om_slider.value() + 90 - self.const_ang))
+            self.tt_slider.setValue(int(20 * (self.om_slider.value() / 10 + 90 - self.const_ang)))
         else:
-            self.const_ang = self.om_slider.value() + 90 - self.tt_slider.value() / 2
+            self.const_ang = self.om_slider.value() / 10 + 90 - self.tt_slider.value() / 20
 
-        signals_gui.ang_to_q.emit(self.om_slider.value(), self.tt_slider.value())
-        signals_gui.get_ewald.emit(self.om_slider.value(), self.tt_slider.value(), self.wl_slider.value() / 100)
+        signals_gui.ang_to_q.emit(self.om_slider.value() / 10, self.tt_slider.value() / 10)
+        signals_gui.get_ewald.emit(self.om_slider.value() / 10, self.tt_slider.value() / 10, self.wl_slider.value() / 100)
 
     def on_tt_slider(self, *args):
-        self.tt_label.setText(f'{self.tt_slider.value()}°')
+        self.tt_label.setText(f'{self.tt_slider.value() / 10:.1f}°')
 
         if self.rad_check_box.isChecked():
-            self.om_slider.setValue(self.const_ang + self.tt_slider.value() / 2 - 90)
+            self.om_slider.setValue(int((self.const_ang + self.tt_slider.value() / 20 - 90) * 10))
         else:
-            self.const_ang = self.om_slider.value() + 90 - self.tt_slider.value() / 2
+            self.const_ang = self.om_slider.value() / 10 + 90 - self.tt_slider.value() / 20
 
-        signals_gui.ang_to_q.emit(self.om_slider.value(), self.tt_slider.value())
-        signals_gui.get_ewald.emit(self.om_slider.value(), self.tt_slider.value(), self.wl_slider.value() / 100)
+        signals_gui.ang_to_q.emit(self.om_slider.value() / 10, self.tt_slider.value() / 10)
+        signals_gui.get_ewald.emit(self.om_slider.value() / 10, self.tt_slider.value() / 10, self.wl_slider.value() / 100)
 
     def update_q_labels(self, q_para, q_norm):
         self.q_para_label.setText(f'{q_para:.3f} Å⁻¹')
@@ -89,4 +91,4 @@ class ElchEwaldControl(QWidget):
 
     def on_wl_slider(self):
         self.wl_label.setText(f'{self.wl_slider.value() / 100:.2f} Å')
-        signals_gui.get_ewald.emit(self.om_slider.value(), self.tt_slider.value(), self.wl_slider.value() / 100)
+        signals_gui.get_ewald.emit(self.om_slider.value() / 10, self.tt_slider.value() / 10, self.wl_slider.value() / 100)
