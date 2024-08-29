@@ -1,7 +1,7 @@
 import matplotlib.ticker as mpt
 
 from Interface.ElchPlot import ElchPlot
-from Signals.Signals import signals_engine
+from Signals.Signals import signals_engine, signals_gui
 
 
 class ElchLinePlot(ElchPlot):
@@ -11,12 +11,13 @@ class ElchLinePlot(ElchPlot):
         self.coordinates = 'Angles'
         self.scale = 'linear'
         self.line, = self.ax.plot([1], [1])
-        signals_engine.line_scan_1D.connect(self.plot_line)
         self.ax.set_ylabel('Intensity (a.u.)')
-
         self.ax.yaxis.set_major_formatter(mpt.FuncFormatter(self.fancy_sci_formatter))
         self.ax.set_xlim(1, 100)
         self.autoscale()
+
+        signals_engine.line_scan_1D.connect(self.plot_line)
+        signals_gui.export_images.connect(self.save)
 
     def plot_line(self, data):
         if all(value is not None for value in data.values()):
@@ -55,3 +56,7 @@ class ElchLinePlot(ElchPlot):
             case 'Square Root':
                 self.ax.set_yscale('function', functions=(lambda x: x ** 0.5, lambda x: x ** 2))
         self.autoscale()
+
+    def save(self, save_details):
+        if save_details.get('option') == 'Linescan - Image':
+            self.figure.savefig(fname=save_details.get('file_path'), format='png', dpi=600)

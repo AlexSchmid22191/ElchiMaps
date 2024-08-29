@@ -10,6 +10,7 @@ class GuiSignals(QObject):
     q_to_ang = Signal(float, float)
     get_ewald = Signal(float, float, float)
     export_data = Signal(dict)
+    export_images = Signal(dict)
 
 
 class EngineSignals(QObject):

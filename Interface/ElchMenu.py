@@ -52,15 +52,15 @@ class ElchMenu(QWidget):
         self.int_dir_select.addItems(['2 Theta', 'Radial'])
         self.int_dist_select = QDoubleSpinBox(decimals=3, singleStep=1e-3, minimum=0, value=0.01)
 
-        self.export_buttons = {key: QPushButton(parent=self, text=key, objectName=key)
-                               for key in ['Export Images', 'Export Data']}
+        self.export_button = QPushButton(parent=self, text='Export')
 
         self.file_open_path = os.path.expanduser('~')
         self.file_export_path = os.path.expanduser('~')
 
         vbox = QVBoxLayout()
-        vbox.addWidget(QLabel(text='File input', objectName='Header'))
+        vbox.addWidget(QLabel(text='File IO', objectName='Header'))
         vbox.addWidget(self.file_button)
+        vbox.addWidget(self.export_button)
         vbox.addSpacing(20)
 
         vbox.addWidget(QLabel(text='Coordinate System', objectName='Header'))
@@ -77,6 +77,11 @@ class ElchMenu(QWidget):
 
         vbox.addWidget(QLabel(text='Colormap', objectName='Header'))
         vbox.addWidget(self.color_select)
+        vbox.addSpacing(20)
+
+        vbox.addWidget(QLabel(text='Plotting Control', objectName='Header'))
+        for button in self.plot_buttons.values():
+            vbox.addWidget(button)
         vbox.addSpacing(20)
 
         vbox.addWidget(QLabel(text='Line Scans', objectName='Header'))
@@ -101,15 +106,7 @@ class ElchMenu(QWidget):
         hbox.addWidget(QLabel(text='Integration direction'))
         hbox.addWidget(self.int_dir_select)
         vbox.addLayout(hbox)
-        vbox.addSpacing(20)
 
-        vbox.addWidget(QLabel(text='Plotting Control', objectName='Header'))
-        for button in self.plot_buttons.values():
-            vbox.addWidget(button)
-
-        vbox.addWidget(QLabel(text='File export', objectName='Header'))
-        for button in self.export_buttons.values():
-            vbox.addWidget(button)
 
         vbox.addStretch()
         vbox.setSpacing(10)
@@ -124,7 +121,7 @@ class ElchMenu(QWidget):
         self.int_dir_select.currentTextChanged.connect(self.on_int_dir_select)
         self.file_button.clicked.connect(self.open_file)
 
-        self.export_buttons['Export Data'].clicked.connect(self.export_data)
+        self.export_button.clicked.connect(self.export)
 
         self.coordinate_checks['Angles'].setChecked(True)
         self.line_checks['Omega'].setChecked(True)
@@ -208,8 +205,7 @@ class ElchMenu(QWidget):
         if filepath.endswith('.xrdml'):
             signals_gui.load_file.emit(filepath)
 
-    def export_data(self):
-        dialog = ElchExport(options=['2D Map', 'Linescan'], last_path=self.file_export_path, file_fmt='.csv',
-                            parent=self)
+    def export(self):
+        dialog = ElchExport(last_path=self.file_export_path, parent=self)
         if dialog.exec():
             self.file_export_path = os.path.dirname(dialog.last_path)

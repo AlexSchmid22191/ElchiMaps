@@ -17,6 +17,7 @@ class ElchContourPlot(ElchPlot):
         signals_engine.map_data_angle.connect(self.plot_angle_map)
         signals_engine.map_data_q.connect(self.plot_q_map)
         signals_engine.line_Scan_2D.connect(self.plot_line_cut)
+        signals_gui.export_images.connect(self.save)
 
     def plot_angle_map(self, data):
         self.coordinates = 'Angles'
@@ -73,3 +74,7 @@ class ElchContourPlot(ElchPlot):
             if self.line is not None:
                 self.line.set_data(data['x'], data['y'])
             self.draw()
+
+    def save(self, save_details):
+        if save_details.get('option') == '2D Map - Image':
+            self.figure.savefig(fname=save_details.get('file_path'), format='png', dpi=600)
