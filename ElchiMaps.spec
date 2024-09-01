@@ -5,7 +5,12 @@ a = Analysis(
     ['ElchiMaps.py'],
     pathex=[],
     binaries=[],
-    datas=[('Interface/Icons', 'Interface/Icons'), ('Interface/Fonts', 'Interface/Fonts'), ('Interface/Styles', 'Interface/Styles'), ('License', 'License')],
+    datas=[('Interface/Icons', 'Interface/Icons'),
+           ('Interface/Fonts', 'Interface/Fonts'),
+           ('Interface/Styles', 'Interface/Styles'),
+           ('License', 'License'),
+           ('.venv/Lib/site-packages/xrayutilities/*.conf', 'xrayutilities'),
+           ('.venv/Lib/site-packages/xrayutilities/VERSION', 'xrayutilities'),],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -32,6 +37,8 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon='Interface/Icons/Logo.ico',
+    contents_directory='.'
 )
 coll = COLLECT(
     exe,
