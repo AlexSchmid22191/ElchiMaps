@@ -9,7 +9,7 @@ a = Analysis(
            ('Interface/Fonts', 'Interface/Fonts'),
            ('Interface/Styles', 'Interface/Styles'),
            ('License', 'License'),
-           ('.venv/Lib/site-packages/xrayutilities/*.conf', 'xrayutilities'),
+           ('.venv/Lib/site-packages/xrayutilities/xrayutilities_default.conf', 'xrayutilities'),
            ('.venv/Lib/site-packages/xrayutilities/VERSION', 'xrayutilities'),],
     hiddenimports=[],
     hookspath=[],
@@ -31,6 +31,26 @@ exe = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
+    console=False,
+    disable_windowed_traceback=False,
+    argv_emulation=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+    icon='Interface/Icons/Logo.ico',
+    contents_directory='.'
+)
+
+exe2 = EXE(
+    pyz,
+    a.scripts,
+    [],
+    exclude_binaries=True,
+    name='ElchiMapsDebug',
+    debug=True,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
     console=True,
     disable_windowed_traceback=False,
     argv_emulation=False,
@@ -40,8 +60,11 @@ exe = EXE(
     icon='Interface/Icons/Logo.ico',
     contents_directory='.'
 )
+
+
 coll = COLLECT(
     exe,
+    exe2,
     a.binaries,
     a.datas,
     strip=False,
