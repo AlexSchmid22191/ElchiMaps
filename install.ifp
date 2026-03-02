@@ -1,0 +1,788 @@
+﻿
+[Header]
+ProjectFileVersion = 1.1
+[General]
+Program name = ElchiMaps
+Program version = 1.0
+Windows XP = 0
+Windows Server 2003 = 0
+Windows Vista = 0
+Windows Server 2008 = 0
+Windows 7 = 0
+Windows 8 = 0
+Windows 10 = 1
+Windows Server 2016 = 0
+Windows Server 2019 = 0
+Windows Server 2022 = 0
+Windows 11 = 1
+DoNotCheckOS = 0
+Company name = ElchWorks
+Website = https://
+SFA = 0
+DFA = 0
+Comp = 1
+[Graphics]
+Wizard image = <main>
+Header image = <main>
+Show Label = 1
+VisualStylesEnabled = 1
+[Files]
+Installation path = <ProgramFiles>\<Company>\<AppName>\
+Autcip = 1
+[Uninstall]
+Vwau = 0
+Website = https://
+Include uninstaller = 1
+Uninstaller filename = Uninstall
+UseCustomDisplayIcon = 0
+CustomDisplayIcon = <InstallPath>\
+[Licence]
+Licence dialog = 1
+[Finish]
+Sart program = 0
+Reboot computer = 0
+Program = <InstallPath>\ElchiTools.exe
+ProgramArguments = 
+[Shortcuts]
+Allowtc = 0
+Shortcut path = <Company>\<AppName>\
+[Serialoptions]
+Allows = 0
+Number = 1000
+Mask = #####-#####-#####-#####
+[SplashScreen]
+Image = 
+Sound = 
+Time = 2
+PlaySound = 0
+Allow = 0
+[Build]
+File = C:\Users\Alex\PycharmProjects\ElchiMaps\dist\EM_Installer_1.0.exe
+SetupIconPath = ..\icons\ancient.ico
+UninstallIconPath = ..\icons\ancient.ico
+CompressionMethod = 0
+CompressionLevel = 2
+[Updater]
+Allow = 0
+1 = <AppName>
+2 = <AppVersion>
+3 = http://
+4 = http://
+5 = http://
+6 = Update
+Language = 0
+RunProg = 
+RunProgs = 0
+Execdlls = 0
+[Languages]
+1
+2
+[Files/Dirs]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_bz2.pyd
+83.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_ctypes.pyd
+122.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_decimal.pyd
+251.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_elementtree.pyd
+130.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_hashlib.pyd
+64.8 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_lzma.pyd
+156.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_multiprocessing.pyd
+34.8 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_overlapped.pyd
+54.8 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_queue.pyd
+31.8 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_socket.pyd
+81.8 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_sqlite3.pyd
+122.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_ssl.pyd
+174.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_uuid.pyd
+25.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_wmi.pyd
+36.8 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-console-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-datetime-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-debug-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-errorhandling-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-fibers-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-file-l1-1-0.dll
+24.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-file-l1-2-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-file-l2-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-handle-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-heap-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-interlocked-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-libraryloader-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-localization-l1-2-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-memory-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-namedpipe-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-processenvironment-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-processthreads-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-processthreads-l1-1-1.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-profile-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-rtlsupport-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-string-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-synch-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-synch-l1-2-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-sysinfo-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-timezone-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-core-util-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-conio-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-convert-l1-1-0.dll
+24.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-environment-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-filesystem-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-heap-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-locale-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-math-l1-1-0.dll
+28.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-private-l1-1-0.dll
+72.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-process-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-runtime-l1-1-0.dll
+24.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-stdio-l1-1-0.dll
+24.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-string-l1-1-0.dll
+24.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-time-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\api-ms-win-crt-utility-l1-1-0.dll
+20.5 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\base_library.zip
+1.3 MB
+zip
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\ElchiMaps.exe
+12.8 MB
+exe
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\ElchiMapsDebug.exe
+12.8 MB
+exe
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\libcrypto-3.dll
+5 MB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\libffi-8.dll
+38.8 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\libssl-3.dll
+768.8 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\pyexpat.pyd
+197.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\python3.dll
+66.8 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\python312.dll
+6.6 MB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\select.pyd
+30.3 KB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\sqlite3.dll
+1.5 MB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\ucrtbase.dll
+1.1 MB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\unicodedata.pyd
+1.1 MB
+pyd
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\VCRUNTIME140.dll
+116.4 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\VCRUNTIME140_1.dll
+48.4 KB
+dll
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\contourpy
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\h5py
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\Interface
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\kiwisolver
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\License
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\matplotlib
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\numpy
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\numpy.libs
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\PIL
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\PySide6
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\scipy
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\scipy.libs
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\setuptools
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\shiboken6
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\typeguard-4.3.0.dist-info
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\wheel-0.43.0.dist-info
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\xrayutilities
+N/A
+[Folder]
+C:\Users\Alex\PycharmProjects\ElchiMaps\dist\ElchiMaps\_asyncio.pyd
+69.8 KB
+pyd
+[Licence_Begin]
+22480
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}}
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
+\pard\fs20\lang1031 Attribution-ShareAlike 4.0 International\par
+\par
+=======================================================================\par
+\par
+Creative Commons Corporation ("Creative Commons") is not a law firm and\par
+does not provide legal services or legal advice. Distribution of\par
+Creative Commons public licenses does not create a lawyer-client or\par
+other relationship. Creative Commons makes its licenses and related\par
+information available on an "as-is" basis. Creative Commons gives no\par
+warranties regarding its licenses, any material licensed under their\par
+terms and conditions, or any related information. Creative Commons\par
+disclaims all liability for damages resulting from their use to the\par
+fullest extent possible.\par
+\par
+Using Creative Commons Public Licenses\par
+\par
+Creative Commons public licenses provide a standard set of terms and\par
+conditions that creators and other rights holders may use to share\par
+original works of authorship and other material subject to copyright\par
+and certain other rights specified in the public license below. The\par
+following considerations are for informational purposes only, are not\par
+exhaustive, and do not form part of our licenses.\par
+\par
+     Considerations for licensors: Our public licenses are\par
+     intended for use by those authorized to give the public\par
+     permission to use material in ways otherwise restricted by\par
+     copyright and certain other rights. Our licenses are\par
+     irrevocable. Licensors should read and understand the terms\par
+     and conditions of the license they choose before applying it.\par
+     Licensors should also secure all rights necessary before\par
+     applying our licenses so that the public can reuse the\par
+     material as expected. Licensors should clearly mark any\par
+     material not subject to the license. This includes other CC-\par
+     licensed material, or material used under an exception or\par
+     limitation to copyright. More considerations for licensors:\par
+    wiki.creativecommons.org/Considerations_for_licensors\par
+\par
+     Considerations for the public: By using one of our public\par
+     licenses, a licensor grants the public permission to use the\par
+     licensed material under specified terms and conditions. If\par
+     the licensor's permission is not necessary for any reason--for\par
+     example, because of any applicable exception or limitation to\par
+     copyright--then that use is not regulated by the license. Our\par
+     licenses grant only permissions under copyright and certain\par
+     other rights that a licensor has authority to grant. Use of\par
+     the licensed material may still be restricted for other\par
+     reasons, including because others have copyright or other\par
+     rights in the material. A licensor may make special requests,\par
+     such as asking that all changes be marked or described.\par
+     Although not required by our licenses, you are encouraged to\par
+     respect those requests where reasonable. More considerations\par
+     for the public:\par
+    wiki.creativecommons.org/Considerations_for_licensees\par
+\par
+=======================================================================\par
+\par
+Creative Commons Attribution-ShareAlike 4.0 International Public\par
+License\par
+\par
+By exercising the Licensed Rights (defined below), You accept and agree\par
+to be bound by the terms and conditions of this Creative Commons\par
+Attribution-ShareAlike 4.0 International Public License ("Public\par
+License"). To the extent this Public License may be interpreted as a\par
+contract, You are granted the Licensed Rights in consideration of Your\par
+acceptance of these terms and conditions, and the Licensor grants You\par
+such rights in consideration of benefits the Licensor receives from\par
+making the Licensed Material available under these terms and\par
+conditions.\par
+\par
+\par
+Section 1 -- Definitions.\par
+\par
+  a. Adapted Material means material subject to Copyright and Similar\par
+     Rights that is derived from or based upon the Licensed Material\par
+     and in which the Licensed Material is translated, altered,\par
+     arranged, transformed, or otherwise modified in a manner requiring\par
+     permission under the Copyright and Similar Rights held by the\par
+     Licensor. For purposes of this Public License, where the Licensed\par
+     Material is a musical work, performance, or sound recording,\par
+     Adapted Material is always produced where the Licensed Material is\par
+     synched in timed relation with a moving image.\par
+\par
+  b. Adapter's License means the license You apply to Your Copyright\par
+     and Similar Rights in Your contributions to Adapted Material in\par
+     accordance with the terms and conditions of this Public License.\par
+\par
+  c. BY-SA Compatible License means a license listed at\par
+     creativecommons.org/compatiblelicenses, approved by Creative\par
+     Commons as essentially the equivalent of this Public License.\par
+\par
+  d. Copyright and Similar Rights means copyright and/or similar rights\par
+     closely related to copyright including, without limitation,\par
+     performance, broadcast, sound recording, and Sui Generis Database\par
+     Rights, without regard to how the rights are labeled or\par
+     categorized. For purposes of this Public License, the rights\par
+     specified in Section 2(b)(1)-(2) are not Copyright and Similar\par
+     Rights.\par
+\par
+  e. Effective Technological Measures means those measures that, in the\par
+     absence of proper authority, may not be circumvented under laws\par
+     fulfilling obligations under Article 11 of the WIPO Copyright\par
+     Treaty adopted on December 20, 1996, and/or similar international\par
+     agreements.\par
+\par
+  f. Exceptions and Limitations means fair use, fair dealing, and/or\par
+     any other exception or limitation to Copyright and Similar Rights\par
+     that applies to Your use of the Licensed Material.\par
+\par
+  g. License Elements means the license attributes listed in the name\par
+     of a Creative Commons Public License. The License Elements of this\par
+     Public License are Attribution and ShareAlike.\par
+\par
+  h. Licensed Material means the artistic or literary work, database,\par
+     or other material to which the Licensor applied this Public\par
+     License.\par
+\par
+  i. Licensed Rights means the rights granted to You subject to the\par
+     terms and conditions of this Public License, which are limited to\par
+     all Copyright and Similar Rights that apply to Your use of the\par
+     Licensed Material and that the Licensor has authority to license.\par
+\par
+  j. Licensor means the individual(s) or entity(ies) granting rights\par
+     under this Public License.\par
+\par
+  k. Share means to provide material to the public by any means or\par
+     process that requires permission under the Licensed Rights, such\par
+     as reproduction, public display, public performance, distribution,\par
+     dissemination, communication, or importation, and to make material\par
+     available to the public including in ways that members of the\par
+     public may access the material from a place and at a time\par
+     individually chosen by them.\par
+\par
+  l. Sui Generis Database Rights means rights other than copyright\par
+     resulting from Directive 96/9/EC of the European Parliament and of\par
+     the Council of 11 March 1996 on the legal protection of databases,\par
+     as amended and/or succeeded, as well as other essentially\par
+     equivalent rights anywhere in the world.\par
+\par
+  m. You means the individual or entity exercising the Licensed Rights\par
+     under this Public License. Your has a corresponding meaning.\par
+\par
+\par
+Section 2 -- Scope.\par
+\par
+  a. License grant.\par
+\par
+       1. Subject to the terms and conditions of this Public License,\par
+          the Licensor hereby grants You a worldwide, royalty-free,\par
+          non-sublicensable, non-exclusive, irrevocable license to\par
+          exercise the Licensed Rights in the Licensed Material to:\par
+\par
+            a. reproduce and Share the Licensed Material, in whole or\par
+               in part; and\par
+\par
+            b. produce, reproduce, and Share Adapted Material.\par
+\par
+       2. Exceptions and Limitations. For the avoidance of doubt, where\par
+          Exceptions and Limitations apply to Your use, this Public\par
+          License does not apply, and You do not need to comply with\par
+          its terms and conditions.\par
+\par
+       3. Term. The term of this Public License is specified in Section\par
+          6(a).\par
+\par
+       4. Media and formats; technical modifications allowed. The\par
+          Licensor authorizes You to exercise the Licensed Rights in\par
+          all media and formats whether now known or hereafter created,\par
+          and to make technical modifications necessary to do so. The\par
+          Licensor waives and/or agrees not to assert any right or\par
+          authority to forbid You from making technical modifications\par
+          necessary to exercise the Licensed Rights, including\par
+          technical modifications necessary to circumvent Effective\par
+          Technological Measures. For purposes of this Public License,\par
+          simply making modifications authorized by this Section 2(a)\par
+          (4) never produces Adapted Material.\par
+\par
+       5. Downstream recipients.\par
+\par
+            a. Offer from the Licensor -- Licensed Material. Every\par
+               recipient of the Licensed Material automatically\par
+               receives an offer from the Licensor to exercise the\par
+               Licensed Rights under the terms and conditions of this\par
+               Public License.\par
+\par
+            b. Additional offer from the Licensor -- Adapted Material.\par
+               Every recipient of Adapted Material from You\par
+               automatically receives an offer from the Licensor to\par
+               exercise the Licensed Rights in the Adapted Material\par
+               under the conditions of the Adapter's License You apply.\par
+\par
+            c. No downstream restrictions. You may not offer or impose\par
+               any additional or different terms or conditions on, or\par
+               apply any Effective Technological Measures to, the\par
+               Licensed Material if doing so restricts exercise of the\par
+               Licensed Rights by any recipient of the Licensed\par
+               Material.\par
+\par
+       6. No endorsement. Nothing in this Public License constitutes or\par
+          may be construed as permission to assert or imply that You\par
+          are, or that Your use of the Licensed Material is, connected\par
+          with, or sponsored, endorsed, or granted official status by,\par
+          the Licensor or others designated to receive attribution as\par
+          provided in Section 3(a)(1)(A)(i).\par
+\par
+  b. Other rights.\par
+\par
+       1. Moral rights, such as the right of integrity, are not\par
+          licensed under this Public License, nor are publicity,\par
+          privacy, and/or other similar personality rights; however, to\par
+          the extent possible, the Licensor waives and/or agrees not to\par
+          assert any such rights held by the Licensor to the limited\par
+          extent necessary to allow You to exercise the Licensed\par
+          Rights, but not otherwise.\par
+\par
+       2. Patent and trademark rights are not licensed under this\par
+          Public License.\par
+\par
+       3. To the extent possible, the Licensor waives any right to\par
+          collect royalties from You for the exercise of the Licensed\par
+          Rights, whether directly or through a collecting society\par
+          under any voluntary or waivable statutory or compulsory\par
+          licensing scheme. In all other cases the Licensor expressly\par
+          reserves any right to collect such royalties.\par
+\par
+\par
+Section 3 -- License Conditions.\par
+\par
+Your exercise of the Licensed Rights is expressly made subject to the\par
+following conditions.\par
+\par
+  a. Attribution.\par
+\par
+       1. If You Share the Licensed Material (including in modified\par
+          form), You must:\par
+\par
+            a. retain the following if it is supplied by the Licensor\par
+               with the Licensed Material:\par
+\par
+                 i. identification of the creator(s) of the Licensed\par
+                    Material and any others designated to receive\par
+                    attribution, in any reasonable manner requested by\par
+                    the Licensor (including by pseudonym if\par
+                    designated);\par
+\par
+                ii. a copyright notice;\par
+\par
+               iii. a notice that refers to this Public License;\par
+\par
+                iv. a notice that refers to the disclaimer of\par
+                    warranties;\par
+\par
+                 v. a URI or hyperlink to the Licensed Material to the\par
+                    extent reasonably practicable;\par
+\par
+            b. indicate if You modified the Licensed Material and\par
+               retain an indication of any previous modifications; and\par
+\par
+            c. indicate the Licensed Material is licensed under this\par
+               Public License, and include the text of, or the URI or\par
+               hyperlink to, this Public License.\par
+\par
+       2. You may satisfy the conditions in Section 3(a)(1) in any\par
+          reasonable manner based on the medium, means, and context in\par
+          which You Share the Licensed Material. For example, it may be\par
+          reasonable to satisfy the conditions by providing a URI or\par
+          hyperlink to a resource that includes the required\par
+          information.\par
+\par
+       3. If requested by the Licensor, You must remove any of the\par
+          information required by Section 3(a)(1)(A) to the extent\par
+          reasonably practicable.\par
+\par
+  b. ShareAlike.\par
+\par
+     In addition to the conditions in Section 3(a), if You Share\par
+     Adapted Material You produce, the following conditions also apply.\par
+\par
+       1. The Adapter's License You apply must be a Creative Commons\par
+          license with the same License Elements, this version or\par
+          later, or a BY-SA Compatible License.\par
+\par
+       2. You must include the text of, or the URI or hyperlink to, the\par
+          Adapter's License You apply. You may satisfy this condition\par
+          in any reasonable manner based on the medium, means, and\par
+          context in which You Share Adapted Material.\par
+\par
+       3. You may not offer or impose any additional or different terms\par
+          or conditions on, or apply any Effective Technological\par
+          Measures to, Adapted Material that restrict exercise of the\par
+          rights granted under the Adapter's License You apply.\par
+\par
+\par
+Section 4 -- Sui Generis Database Rights.\par
+\par
+Where the Licensed Rights include Sui Generis Database Rights that\par
+apply to Your use of the Licensed Material:\par
+\par
+  a. for the avoidance of doubt, Section 2(a)(1) grants You the right\par
+     to extract, reuse, reproduce, and Share all or a substantial\par
+     portion of the contents of the database;\par
+\par
+  b. if You include all or a substantial portion of the database\par
+     contents in a database in which You have Sui Generis Database\par
+     Rights, then the database in which You have Sui Generis Database\par
+     Rights (but not its individual contents) is Adapted Material,\par
+     including for purposes of Section 3(b); and\par
+\par
+  c. You must comply with the conditions in Section 3(a) if You Share\par
+     all or a substantial portion of the contents of the database.\par
+\par
+For the avoidance of doubt, this Section 4 supplements and does not\par
+replace Your obligations under this Public License where the Licensed\par
+Rights include other Copyright and Similar Rights.\par
+\par
+\par
+Section 5 -- Disclaimer of Warranties and Limitation of Liability.\par
+\par
+  a. UNLESS OTHERWISE SEPARATELY UNDERTAKEN BY THE LICENSOR, TO THE\par
+     EXTENT POSSIBLE, THE LICENSOR OFFERS THE LICENSED MATERIAL AS-IS\par
+     AND AS-AVAILABLE, AND MAKES NO REPRESENTATIONS OR WARRANTIES OF\par
+     ANY KIND CONCERNING THE LICENSED MATERIAL, WHETHER EXPRESS,\par
+     IMPLIED, STATUTORY, OR OTHER. THIS INCLUDES, WITHOUT LIMITATION,\par
+     WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR\par
+     PURPOSE, NON-INFRINGEMENT, ABSENCE OF LATENT OR OTHER DEFECTS,\par
+     ACCURACY, OR THE PRESENCE OR ABSENCE OF ERRORS, WHETHER OR NOT\par
+     KNOWN OR DISCOVERABLE. WHERE DISCLAIMERS OF WARRANTIES ARE NOT\par
+     ALLOWED IN FULL OR IN PART, THIS DISCLAIMER MAY NOT APPLY TO YOU.\par
+\par
+  b. TO THE EXTENT POSSIBLE, IN NO EVENT WILL THE LICENSOR BE LIABLE\par
+     TO YOU ON ANY LEGAL THEORY (INCLUDING, WITHOUT LIMITATION,\par
+     NEGLIGENCE) OR OTHERWISE FOR ANY DIRECT, SPECIAL, INDIRECT,\par
+     INCIDENTAL, CONSEQUENTIAL, PUNITIVE, EXEMPLARY, OR OTHER LOSSES,\par
+     COSTS, EXPENSES, OR DAMAGES ARISING OUT OF THIS PUBLIC LICENSE OR\par
+     USE OF THE LICENSED MATERIAL, EVEN IF THE LICENSOR HAS BEEN\par
+     ADVISED OF THE POSSIBILITY OF SUCH LOSSES, COSTS, EXPENSES, OR\par
+     DAMAGES. WHERE A LIMITATION OF LIABILITY IS NOT ALLOWED IN FULL OR\par
+     IN PART, THIS LIMITATION MAY NOT APPLY TO YOU.\par
+\par
+  c. The disclaimer of warranties and limitation of liability provided\par
+     above shall be interpreted in a manner that, to the extent\par
+     possible, most closely approximates an absolute disclaimer and\par
+     waiver of all liability.\par
+\par
+\par
+Section 6 -- Term and Termination.\par
+\par
+  a. This Public License applies for the term of the Copyright and\par
+     Similar Rights licensed here. However, if You fail to comply with\par
+     this Public License, then Your rights under this Public License\par
+     terminate automatically.\par
+\par
+  b. Where Your right to use the Licensed Material has terminated under\par
+     Section 6(a), it reinstates:\par
+\par
+       1. automatically as of the date the violation is cured, provided\par
+          it is cured within 30 days of Your discovery of the\par
+          violation; or\par
+\par
+       2. upon express reinstatement by the Licensor.\par
+\par
+     For the avoidance of doubt, this Section 6(b) does not affect any\par
+     right the Licensor may have to seek remedies for Your violations\par
+     of this Public License.\par
+\par
+  c. For the avoidance of doubt, the Licensor may also offer the\par
+     Licensed Material under separate terms or conditions or stop\par
+     distributing the Licensed Material at any time; however, doing so\par
+     will not terminate this Public License.\par
+\par
+  d. Sections 1, 5, 6, 7, and 8 survive termination of this Public\par
+     License.\par
+\par
+\par
+Section 7 -- Other Terms and Conditions.\par
+\par
+  a. The Licensor shall not be bound by any additional or different\par
+     terms or conditions communicated by You unless expressly agreed.\par
+\par
+  b. Any arrangements, understandings, or agreements regarding the\par
+     Licensed Material not stated herein are separate from and\par
+     independent of the terms and conditions of this Public License.\par
+\par
+\par
+Section 8 -- Interpretation.\par
+\par
+  a. For the avoidance of doubt, this Public License does not, and\par
+     shall not be interpreted to, reduce, limit, restrict, or impose\par
+     conditions on any use of the Licensed Material that could lawfully\par
+     be made without permission under this Public License.\par
+\par
+  b. To the extent possible, if any provision of this Public License is\par
+     deemed unenforceable, it shall be automatically reformed to the\par
+     minimum extent necessary to make it enforceable. If the provision\par
+     cannot be reformed, it shall be severed from this Public License\par
+     without affecting the enforceability of the remaining terms and\par
+     conditions.\par
+\par
+  c. No term or condition of this Public License will be waived and no\par
+     failure to comply consented to unless expressly agreed to by the\par
+     Licensor.\par
+\par
+  d. Nothing in this Public License constitutes or may be interpreted\par
+     as a limitation upon, or waiver of, any privileges and immunities\par
+     that apply to the Licensor or You, including from the legal\par
+     processes of any jurisdiction or authority.\par
+\par
+\par
+=======================================================================\par
+\par
+Creative Commons is not a party to its public\par
+licenses. Notwithstanding, Creative Commons may elect to apply one of\par
+its public licenses to material it publishes and in those instances\par
+will be considered the \ldblquote Licensor.\rdblquote  The text of the Creative Commons\par
+public licenses is dedicated to the public domain under the CC0 Public\par
+Domain Dedication. Except for the limited purpose of indicating that\par
+material is shared under a Creative Commons public license or as\par
+otherwise permitted by the Creative Commons policies published at\par
+creativecommons.org/policies, Creative Commons does not authorize the\par
+use of the trademark "Creative Commons" or any other trademark or logo\par
+of Creative Commons without its prior written consent including,\par
+without limitation, in connection with any unauthorized modifications\par
+to any of its public licenses or any other arrangements,\par
+understandings, or agreements concerning use of licensed material. For\par
+the avoidance of doubt, this paragraph does not form part of the\par
+public licenses.\par
+\par
+Creative Commons may be contacted at creativecommons.org.\par
+\f1\par
+}
+ [Licence_End]
+[Registry]
+[Variables]
+[SCs]
+Desktop
+ElchiMaps
+<InstallPath>\ElchiMaps.exe
+
+
+0
+[IFP_End]
+[Serials]
+[Serials_End]
+[Commands]
